@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="backFragments/head :: head"/>
+
+  <body id="page-top">
+<div th:replace="backFragments/navigation :: navi"/>
+    <div id="wrapper">
+      <div th:replace="backFragments/sidebar :: sidebar" class="sidebar"/>
+
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Page Content -->
+          <h1>Dodaj film do biblioteki</h1>
+          <hr>
+          <div class="card-body">
+          <form th:action="@{/dashboard/addmovie}" method="post" th:object="${movie}">
+            <div class="form-group">
+                <div class="col-md-6">
+                  <label for="title">Tytuł filmu:</label>
+                    <input type="text" th:field="*{title}" id="title" class="form-control" required="required">
+                </div>
+                <div class="col-md-2">
+                  <label for="releaseDate">Data premiery:</label>
+                  <input type="date" id="releaseDate" class="form-control" placeholder="dd-mm-rrrr" required="required">
+                </div>
+              <div class="col-md-3">
+                <label for="duration">Długość filmu:</label>
+                <input type="text" th:field="*{duration}" id="duration" class="form-control" placeholder="Minuty" required="required">
+              </div>
+              <div class="col-md-2">
+                <label for="ageCategory">Kategoria wiekowa:</label>
+                <select id="ageCategory" name="ageCategory" class="form-control">
+                  <option th:each="ageCategory : ${T(pl.cinemaWeb.SpringCinema.model.AgeCategoryEnum).values()}" th:value="${ageCategory}" th:text="${ageCategory}"></option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="director">Reżyser:</label>
+                <input type="text" th:field="*{director}" id="director" class="form-control" required="required">
+              </div>
+              <div class="col-md-10">
+                <label for="description">Opis filmu:</label>
+                <textarea id="description" rows="6" cols="100" class="form-control" placeholder="Krótki opis filmu" maxlength="1000" required="required"></textarea>
+              </div>
+              <div class="form-row">
+              <div class="col-md-3">
+                <label for="imageUrl">Zdjęcie na tło:</label>
+                <input type="file" th:field="*{imageUrl}" id="imageUrl" class="form-control" accept="image/png, image/jpeg" required="required">
+              </div>
+              <div class="col-md-3">
+                <label for="coverUrl">Okładka filmu:</label>
+                <input type="file" th:field="*{imageUrl}" id="coverUrl" class="form-control" accept="image/png, image/jpeg" required="required">
+              </div>
+              </div>
+            </div>
+              <button type="submit" class="col-md-2 btn btn-primary btn-block" id="saveButton">Dodaj film</button>
+          </form>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <div th:replace="backFragments/footer :: footer"/>
+  </body>
+</html>
