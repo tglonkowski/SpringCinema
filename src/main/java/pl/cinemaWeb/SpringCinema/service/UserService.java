@@ -24,4 +24,19 @@ public class UserService {
         userRepository.save(user);
 
     }
+
+
+
+    public void showPassword(String email){
+
+        PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+        User user = userRepository.getUsersByEmail(email);
+
+        if (user.getPassword() == bCryptPasswordEncoder.encode("1")){
+            System.out.println("DZIAŁA");
+        }else{
+            System.out.println("NIE DZIAŁA");
+        }
+    }
 }

@@ -23,14 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth
                 .jdbcAuthentication()
-                //sprawdzenie i pobranie loginu i hasła oraz czy jest aktywny użytkownika po adresie email
-                //który jest loginem
                 .usersByUsernameQuery("SELECT email, password, active FROM user WHERE email=?")
-                //pobranie roli uzytkownika z bazy danych po podanym loginie(email)
                 .authoritiesByUsernameQuery("SELECT email, role FROM user WHERE email=?")
-                //ustawienie klasy odpowiedzialnej za nawiązanie połączenia do bazy danych
                 .dataSource(dataSource)
-                //ustawienie sposobu kodowania hasła w bazie danych
                 .passwordEncoder(bCryptPasswordEncoder);
 
     }
@@ -40,16 +35,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                //ponizsze linki sa dostepne tylko dla roli user i admin
-                //.antMatchers("/article/*", "/article").hasAnyAuthority("user","admin")
-                //ponizsze linki sa dostepne dla wszystkich zalogowanych uzytkownikow bez wzgledu na roele
-                //.antMatchers("/article/*", "/article").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")//adres strony z naszym formularzem
-                .defaultSuccessUrl("/")//domyślne przekierowane po poprawnym zalogowaniu
-                .failureUrl("/login?error=true")//adres gdy mamy błąd logowania
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .failureUrl("/login?error=true")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and()
