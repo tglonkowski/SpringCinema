@@ -33,10 +33,16 @@ public class UserService {
 
         User user = userRepository.getUsersByEmail(email);
 
-        if (user.getPassword() == bCryptPasswordEncoder.encode("1")){
+        String password = user.getPassword();
+
+        String bpassword = bCryptPasswordEncoder.encode("1");
+
+        if (password.equals(bpassword)){
             System.out.println("DZIAŁA");
         }else{
             System.out.println("NIE DZIAŁA");
         }
+
+        System.out.println(user);
     }
 }
