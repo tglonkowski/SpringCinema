@@ -24,7 +24,6 @@ public class User {
     @NotEmpty(message = "{user.password.notempty}")
     private String password;
 
-    @NotEmpty(message = "{user.role.notempty}")
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
