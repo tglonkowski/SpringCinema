@@ -39,10 +39,14 @@ public class Movie {
     @Column(name = "image_url")
     private String imageUrl;
 
+    @NotEmpty(message = "{movie.coverUrl.notempty}")
+    @Column(name = "cover_url")
+    private String coverUrl;
+
     public Movie() {
     }
 
-    public Movie(@NotEmpty(message = "{movie.title.notempty}") String title, @NotEmpty(message = "{movie.releaseDate.notempty}") Date releaseDate, @NotEmpty(message = "{movie.duration.notempty}") int duration, @NotEmpty(message = "{movie.ageCategory.notempty}") AgeCategoryEnum ageCategory, @NotEmpty(message = "{movie.director.notempty}") String director, @NotEmpty(message = "{movie.description.notempty}") String description, @NotEmpty(message = "{movie.imageUrl.notempty}") String imageUrl) {
+    public Movie(@NotEmpty(message = "{movie.title.notempty}") String title, @NotEmpty(message = "{movie.releaseDate.notempty}") Date releaseDate, @NotEmpty(message = "{movie.duration.notempty}") int duration, @NotEmpty(message = "{movie.ageCategory.notempty}") AgeCategoryEnum ageCategory, @NotEmpty(message = "{movie.director.notempty}") String director, @NotEmpty(message = "{movie.description.notempty}") String description, @NotEmpty(message = "{movie.imageUrl.notempty}") String imageUrl, @NotEmpty(message = "{movie.coverUrl.notempty}") String coverUrl) {
         this.title = title;
         this.releaseDate = releaseDate;
         this.duration = duration;
@@ -50,6 +54,7 @@ public class Movie {
         this.director = director;
         this.description = description;
         this.imageUrl = imageUrl;
+        this.coverUrl = coverUrl;
     }
 
     public long getId() {
@@ -114,5 +119,28 @@ public class Movie {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", duration=" + duration +
+                ", ageCategory=" + ageCategory +
+                ", director='" + director + '\'' +
+                ", description='" + description + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", coverUrl='" + coverUrl + '\'' +
+                '}';
     }
 }
