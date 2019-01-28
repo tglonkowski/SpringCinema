@@ -64,6 +64,7 @@
   background-color: $gray-900;
   min-height: calc(100vh - #{$navbar-base-height});
   @include sidebar-icons;
+<<<<<<< HEAD
   .myButton {
     -moz-box-shadow:inset 0px 0px 14px -3px #f2fadc;
     -webkit-box-shadow:inset 0px 0px 14px -3px #f2fadc;
@@ -119,11 +120,6 @@
     overflow: hidden;
   }
 }
-
-
-
-
-
 
 @media (min-width: 768px) {
   .sidebar {
