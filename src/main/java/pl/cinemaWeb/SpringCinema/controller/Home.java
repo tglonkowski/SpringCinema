@@ -17,9 +17,6 @@ public class Home {
 
     @GetMapping("/")
     public String home(){
-
-        userService.showPassword("t@kropki.pl");
-
         return "home";
     }
 }
