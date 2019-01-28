@@ -149,6 +149,23 @@
   border: 0;
 }
 
+.btnT {
+  font-size: 14px;
+  font-weight: 800;
+  padding: 15px 25px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 0;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.logout {
+  padding: 0px;
+  background-color: transparent;
+  border: 0 none;
+  padding: 0px 10px 0px 0px !important;
+}
+
 .btn-primary {
   background-color: #ff253a;
 }

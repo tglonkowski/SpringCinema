@@ -6,5 +6,4 @@ import pl.cinemaWeb.SpringCinema.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User getUsersByEmail(String email);
 }

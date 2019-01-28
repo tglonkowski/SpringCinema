@@ -1,10 +1,12 @@
 package pl.cinemaWeb.SpringCinema.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
-@Table
 @Entity
+@Table(name = "user")
 public class User {
 
     @Id
@@ -21,6 +23,7 @@ public class User {
     @NotEmpty(message = "{user.email.notempty}")
     private String email;
 
+    @Length(min = 10)
     @NotEmpty(message = "{user.password.notempty}")
     private String password;
 
