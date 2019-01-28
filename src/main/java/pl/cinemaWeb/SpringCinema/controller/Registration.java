@@ -31,12 +31,8 @@ public class Registration {
     @PostMapping("/register")
     public String addNewUser(@ModelAttribute User user){
 
-        user.setActive(Boolean.TRUE);
-        user.setRole(RoleEnum.Administrator);
-
         userService.saveUser(user);
 
         return "home";
-
     }
 }
