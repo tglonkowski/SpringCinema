@@ -2,6 +2,7 @@ package pl.cinemaWeb.SpringCinema.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Table
@@ -16,15 +17,14 @@ public class Movie {
     @Column(unique = true)
     private String title;
 
-    @NotEmpty(message = "{movie.releaseDate.notempty}")
+    @NotNull(message = "{movie.releaseDate.notempty}")
     @Column(name = "release_date")
     private Date releaseDate;
 
-    @NotEmpty(message = "{movie.duration.notempty}")
+    @NotNull(message = "{movie.duration.notempty}")
     @Column(nullable = false)
     private int duration;
 
-    @NotEmpty(message = "{movie.ageCategory.notempty}")
     @Enumerated(EnumType.STRING)
     @Column(name = "age_category")
     private AgeCategoryEnum ageCategory;
@@ -35,22 +35,18 @@ public class Movie {
     @NotEmpty(message = "{movie.description.notempty}")
     private String description;
 
-    @NotEmpty(message = "{movie.imageUrl.notempty}")
     @Column(name = "image_url")
     private String imageUrl;
+
+    @NotEmpty(message = "{movie.coverUrl.notempty}")
+    @Column(name = "cover_url")
+    private String coverUrl;
 
     public Movie() {
     }
 
-    public Movie(@NotEmpty(message = "{movie.title.notempty}") String title, @NotEmpty(message = "{movie.releaseDate.notempty}") Date releaseDate, @NotEmpty(message = "{movie.duration.notempty}") int duration, @NotEmpty(message = "{movie.ageCategory.notempty}") AgeCategoryEnum ageCategory, @NotEmpty(message = "{movie.director.notempty}") String director, @NotEmpty(message = "{movie.description.notempty}") String description, @NotEmpty(message = "{movie.imageUrl.notempty}") String imageUrl) {
-        this.title = title;
-        this.releaseDate = releaseDate;
-        this.duration = duration;
-        this.ageCategory = ageCategory;
-        this.director = director;
-        this.description = description;
-        this.imageUrl = imageUrl;
-    }
+
+
 
     public long getId() {
         return id;
@@ -114,5 +110,28 @@ public class Movie {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", duration=" + duration +
+                ", ageCategory=" + ageCategory +
+                ", director='" + director + '\'' +
+                ", description='" + description + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", coverUrl='" + coverUrl + '\'' +
+                '}';
     }
 }

@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/dashboard").hasAnyAuthority(RoleEnum.Administrator.toString())
+                .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/")

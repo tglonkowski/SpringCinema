@@ -19,12 +19,10 @@ public class UserService {
     }
 
     public void saveUser(User user){
-
         user.setActive(Boolean.TRUE);
         user.setRole(RoleEnum.Administrator);
 
         PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         userRepository.save(user);
