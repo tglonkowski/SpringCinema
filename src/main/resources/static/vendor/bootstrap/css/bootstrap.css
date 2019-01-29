@@ -4213,6 +4213,7 @@ input[type="button"].btn-block {
 .navbar-nav .nav-link {
   padding-right: 0;
   padding-left: 0;
+  cursor:pointer;
 }
 
 .navbar-nav .dropdown-menu {

@@ -4,6 +4,7 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-grayscale/blob/master/LICENSE)
  */
 
+
 #mainNav {
   min-height: 56px;
   background-color: #fff;
@@ -63,26 +64,28 @@
     color: white;
   }
   #mainNav.navbar-shrink {
-    background-color: #fff;
+    background-color: rgba(15, 0, 37, 0.6);
+    background: rgba(15, 0, 37, 0.6);
+    color: rgba(15, 0, 37, 0.6);
   }
   #mainNav.navbar-shrink .navbar-brand {
-    color: #161616;
+    color: #fff;
   }
   #mainNav.navbar-shrink .nav-link {
-    color: #161616;
+    color: #fff;
     padding: 1.5rem 1.5rem 1.25rem;
     border-bottom: 0.25rem solid transparent;
   }
   #mainNav.navbar-shrink .nav-link:hover {
-    color: #64a19d;
+    color: #fff;
   }
   #mainNav.navbar-shrink .nav-link:active {
-    color: #467370;
+    color: #fff;
   }
   #mainNav.navbar-shrink .nav-link.active {
-    color: #64a19d;
+    color: #fff;
     outline: none;
-    border-bottom: 0.25rem solid #64a19d;
+    border-bottom: 0.25rem solid #fff;
   }
 }
 .masthead {
@@ -209,8 +212,8 @@
 
 .signup-section {
   padding: 10rem 0;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(14, 12, 29, 0.1)), color-stop(75%, rgba(14, 12, 29, 0.5)), to(#0e0c1d)), url("../img/bg-signup.jpg");
-  background: linear-gradient(to bottom, rgba(14, 12, 29, 0.1) 0%, rgba(14, 12, 29, 0.5) 75%, #0e0c1d 100%), url("../img/bg-signup.jpg");
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(14, 12, 29, 0.1)), color-stop(75%, rgba(14, 12, 29, 0.5)), to(#0e0c1d)), url("../img/contact_image.jpg");
+  background: linear-gradient(to bottom, rgba(14, 12, 29, 0.1) 0%, rgba(14, 12, 29, 0.5) 75%, #0e0c1d 100%), url("../img/contact_image.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
@@ -279,16 +282,16 @@ body {
 }
 
 a {
-  color: #1a0f30;
+  color: #ffffff;
 }
 
 a:focus, a:hover {
   text-decoration: none;
-  color: #241544;
+  color: #ffffff;
 }
 
 .bg-black {
-  background-color: #0e0c1d !important;
+  background-color: #1d1a30 !important;
 }
 
 .bg-primary {
