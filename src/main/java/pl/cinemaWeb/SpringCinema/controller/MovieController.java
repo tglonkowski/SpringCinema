@@ -9,8 +9,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.cinemaWeb.SpringCinema.model.Movie;
+import pl.cinemaWeb.SpringCinema.model.databaseviews.ListMovie;
 import pl.cinemaWeb.SpringCinema.service.FileStorageService;
 import pl.cinemaWeb.SpringCinema.service.MovieService;
+
+import java.util.List;
 
 
 @Controller
@@ -49,5 +52,15 @@ public class MovieController {
         model.addAttribute("movie", new Movie());
 
         return "dashboard/addmovie";
+    }
+
+    @GetMapping("/dashboard/editmovie")
+    String goToEditMovie(Model model){
+
+        List<ListMovie> allMovies = movieService.getAllMovie();
+
+        model.addAttribute("movies", allMovies);
+
+        return "dashboard/editmovie";
     }
 }
