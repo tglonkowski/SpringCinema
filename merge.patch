@@ -1,0 +1,92 @@
+Index: src/main/java/pl/cinemaWeb/SpringCinema/service/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/pl/cinemaWeb/SpringCinema/service/UserService.java	(date 1548459219000)
++++ src/main/java/pl/cinemaWeb/SpringCinema/service/UserService.java	(date 1548460366505)
+@@ -23,20 +23,5 @@
+ 
+         userRepository.save(user);
+ 
+-    }
+-
+-
+-
+-    public void showPassword(String email){
+-
+-        PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+-
+-        User user = userRepository.getUsersByEmail(email);
+-
+-        if (user.getPassword() == bCryptPasswordEncoder.encode("hp")){
+-            System.out.println("DZIAŁA");
+-        }else{
+-            System.out.println("NIE DZIAŁA");
+-        }
+     }
+ }
+Index: src/main/java/pl/cinemaWeb/SpringCinema/security/SecurityConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/pl/cinemaWeb/SpringCinema/security/SecurityConfig.java	(date 1548459219000)
++++ src/main/java/pl/cinemaWeb/SpringCinema/security/SecurityConfig.java	(date 1548460452373)
+@@ -3,8 +3,10 @@
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.context.annotation.Configuration;
+ import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
++import org.springframework.security.config.annotation.authentication.configurers.provisioning.JdbcUserDetailsManagerConfigurer;
+ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+ import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
++import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+ import org.springframework.security.crypto.password.PasswordEncoder;
+ 
+@@ -21,8 +23,7 @@
+ 
+         PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+ 
+-        auth
+-                .jdbcAuthentication()
++                auth.jdbcAuthentication()
+                 .usersByUsernameQuery("SELECT email, password, active FROM user WHERE email=?")
+                 .authoritiesByUsernameQuery("SELECT email, role FROM user WHERE email=?")
+                 .dataSource(dataSource)
+@@ -33,8 +34,8 @@
+     @Override
+     protected void configure(HttpSecurity http) throws Exception {
+ 
+-        http
+-                .authorizeRequests().anyRequest().permitAll()
++        http.authorizeRequests()
++                .anyRequest().permitAll()
+                 .and()
+                 .formLogin()
+                 .loginPage("/login")
+Index: src/main/java/pl/cinemaWeb/SpringCinema/model/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/pl/cinemaWeb/SpringCinema/model/User.java	(date 1548459219000)
++++ src/main/java/pl/cinemaWeb/SpringCinema/model/User.java	(date 1548460229958)
+@@ -96,4 +96,17 @@
+     public void setActive(Boolean active) {
+         this.active = active;
+     }
++
++    @Override
++    public String toString() {
++        return "User{" +
++                "id=" + id +
++                ", name='" + name + '\'' +
++                ", lastName='" + lastName + '\'' +
++                ", email='" + email + '\'' +
++                ", password='" + password + '\'' +
++                ", role=" + role +
++                ", active=" + active +
++                '}';
++    }
+ }
