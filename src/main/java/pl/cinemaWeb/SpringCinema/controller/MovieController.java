@@ -42,7 +42,7 @@ public class MovieController {
         String fileName = "image_" + movie.getTitle() + "_" + movie.getDirector() + "_" + movie.getReleaseDate();
         fileName.replace(" ", "_");
         fileStorageService.storeFile(file, fileName);
-        String movieCover = "movieImages/" + fileName;
+        String movieCover = "static/movieImages/" + fileName;
         movie.setCoverUrl(movieCover);
         movieService.saveMovie(movie);
         model.addAttribute("success", "Film dodany do bazy.");
