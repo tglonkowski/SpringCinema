@@ -45,8 +45,16 @@ public class Movie {
     public Movie() {
     }
 
-
-
+    public Movie(@NotEmpty(message = "{movie.title.notempty}") String title, @NotNull(message = "{movie.releaseDate.notempty}") Date releaseDate, @NotNull(message = "{movie.duration.notempty}") int duration, AgeCategoryEnum ageCategory, @NotEmpty(message = "{movie.director.notempty}") String director, @NotEmpty(message = "{movie.description.notempty}") String description, String imageUrl, @NotEmpty(message = "{movie.coverUrl.notempty}") String coverUrl) {
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+        this.ageCategory = ageCategory;
+        this.director = director;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.coverUrl = coverUrl;
+    }
 
     public long getId() {
         return id;
