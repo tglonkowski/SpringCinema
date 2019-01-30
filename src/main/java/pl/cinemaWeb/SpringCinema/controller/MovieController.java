@@ -65,7 +65,7 @@ public class MovieController {
         return "dashboard/movie/listmovie";
     }
 
-    @GetMapping("/dashboard/movie/{id}")
+    @GetMapping("/dashboard/{id}")
     String movie(@PathVariable(name = "id") long movieId, Model model){
 
         Movie movieById = movieService.getMovieById(movieId);
