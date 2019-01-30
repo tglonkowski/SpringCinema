@@ -13,49 +13,48 @@
         <div class="container-fluid">
 
           <!-- Page Content -->
-          <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
-              <!--poniższa linijka wyswietli sie gdy tabela uzytkownikow jest pusta-->
-              <div th:if="${#lists.isEmpty(movies)}">Empty movie list</div>
-              <!--ponizsza tabela wyswietli sie kiedy tabela uzytkownikow w bazie danych bedzie posiadala jakies dane-->
-              <div th:if="${not #lists.isEmpty(movies)}">
-                <!-- DataTables Example -->
-                <div class="card mb-3">
-                  <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    Lista dostępnych filmów</div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                          <th>Tytuł</th>
-                          <th>Kategoria wiekowa</th>
-                          <th>Reżyser</th>
-                          <th>Edytuj</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                          <th>Tytuł</th>
-                          <th>Kategoria wiekowa</th>
-                          <th>Reżyser</th>
-                          <th>Edytuj</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        <tr th:each="movie : ${movies}">
-                          <td th:text="${movie.title}"/>
-                          <td th:text="${movie.ageCategory}"/>
-                          <td th:text="${movie.director}"/>
-                          <td><a id="edit-movie" style="text-decoration: none black" th:href="${'/movies/edit/'+movie.id}">Edytuj</a></td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-          </div>
+          <h1>Edytuj film</h1>
+          <hr>
+          <span th:text="${success}"></span>
+          <div class="card-body">
+          <form th:action="@{/dashboard/editmovie}" method="post" th:object="${movie}" enctype="multipart/form-data">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="form-group">
+                <div class="col-md-6">
+                  <label for="title">Tytuł filmu:</label>
+                    <input type="text" th:field="*{title}" id="title" class="form-control" required="required">
+                  <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="help-block text-danger"></p>
+                </div>
+                <div class="col-md-2">
+                  <label for="releaseDate">Data premiery:</label>
+                  <input type="date" th:field="*{releaseDate}" id="releaseDate" class="form-control" pattern="dd-MM-yyyy" required="required">
+                  <!--<p th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}" class="help-block text-danger"></p>-->
 
+                </div>
+              <div class="col-md-3">
+                <label for="duration">Długość filmu:</label>
+                <input type="text" th:field="*{duration}" id="duration" class="form-control" placeholder="Minuty" required="required">
+                <p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="help-block text-danger"></p>
+              </div>
+              <div class="col-md-2">
+                <label for="ageCategory">Kategoria wiekowa:</label>
+                <select id="ageCategory" name="ageCategory" class="form-control">
+                  <option th:each="ageCategory : ${T(pl.cinemaWeb.SpringCinema.model.AgeCategoryEnum).values()}" th:value="${ageCategory}" th:text="${ageCategory}"></option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="director">Reżyser:</label>
+                <input type="text" th:field="*{director}" id="director" class="form-control" required="required">
+                <p th:if="${#fields.hasErrors('director')}" th:errors="*{director}" class="help-block text-danger"></p>
+              </div>
+              <div class="col-md-10">
+                <label for="description">Opis filmu:</label>
+                <textarea th:field="*{description}" id="description" rows="6" cols="100" class="form-control" placeholder="Krótki opis filmu" maxlength="1000" required="required"></textarea>
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="help-block text-danger"></p>
+              </div>
+            </div>
+              <button type="submit" class="col-md-2 btn btn-primary btn-block" id="saveButton">Edytuj film</button>
+          </form>
           </div>
         </div>
         <!-- /.container-fluid -->

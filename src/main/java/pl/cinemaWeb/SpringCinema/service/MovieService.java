@@ -8,6 +8,7 @@ import pl.cinemaWeb.SpringCinema.repository.ListMovieRepository;
 import pl.cinemaWeb.SpringCinema.repository.MovieRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieService {
@@ -29,5 +30,29 @@ public class MovieService {
         List<ListMovie> allMovies = listMovieRepository.findAll();
 
         return allMovies;
+    }
+
+    public Movie getMovieById(long movieId){
+        Optional<Movie> optionalMovie = movieRepository.findById(movieId);
+
+        if (optionalMovie.isPresent()) {
+            return optionalMovie.get();
+        }
+
+        return null;
+
+    }
+
+    public Movie editMovie(Movie movie){
+
+
+        Movie movieFromDB = getMovieById(movie.getId());
+
+        movie.setImageUrl(movieFromDB.getImageUrl());
+        movie.setCoverUrl(movieFromDB.getCoverUrl());
+
+        Movie editMovie = movieRepository.save(movie);
+
+        return editMovie;
     }
 }

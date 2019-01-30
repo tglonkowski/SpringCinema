@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+
+<head th:replace="backFragments/head :: head"/>
+
+  <body id="page-top">
+<div th:replace="backFragments/navigation :: navi"/>
+    <div id="wrapper">
+      <div th:replace="backFragments/sidebar :: sidebar" class="sidebar"/>
+
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Page Content -->
+          <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+              <!--poniższa linijka wyswietli sie gdy tabela uzytkownikow jest pusta-->
+              <div th:if="${#lists.isEmpty(movies)}">Empty movie list</div>
+              <!--ponizsza tabela wyswietli sie kiedy tabela uzytkownikow w bazie danych bedzie posiadala jakies dane-->
+              <div th:if="${not #lists.isEmpty(movies)}">
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                  <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Lista dostępnych filmów</div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                          <th>Tytuł</th>
+                          <th>Kategoria wiekowa</th>
+                          <th>Reżyser</th>
+                          <th>Edytuj</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                          <th>Tytuł</th>
+                          <th>Kategoria wiekowa</th>
+                          <th>Reżyser</th>
+                          <th>Edytuj</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        <tr th:each="movie : ${movies}">
+                          <td th:text="${movie.title}"/>
+                          <td th:text="${movie.ageCategory}"/>
+                          <td th:text="${movie.director}"/>
+                          <td><a id="edit-movie" style="text-decoration: none black" th:href="${'/dashboard/movie/'+movie.id}">Edytuj</a></td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+          </div>
+
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <div th:replace="backFragments/footer :: footer"/>
+  </body>
+</html>

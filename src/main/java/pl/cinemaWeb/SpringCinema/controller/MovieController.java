@@ -13,6 +13,7 @@ import pl.cinemaWeb.SpringCinema.model.databaseviews.ListMovie;
 import pl.cinemaWeb.SpringCinema.service.FileStorageService;
 import pl.cinemaWeb.SpringCinema.service.MovieService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -33,13 +34,13 @@ public class MovieController {
     public String addMovie(Model model){
         Movie movie = new Movie();
         model.addAttribute("movie", movie);
-        return "dashboard/addmovie";
+        return "dashboard/movie/addmovie";
     }
 
     @PostMapping("/dashboard/addmovie")
-    public String saveMovie(@ModelAttribute Movie movie, @RequestParam("coverImage") MultipartFile file, BindingResult bindingResult, Model model){
+    public String saveMovie(@Valid @ModelAttribute Movie movie, @RequestParam("coverImage") MultipartFile file, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()) {
-            return "dashboard/addmovie";
+            return "dashboard/movie/addmovie";
         }
 
         String fileName = "image_" + movie.getTitle() + "_" + movie.getDirector() + "_" + movie.getReleaseDate();
@@ -51,16 +52,38 @@ public class MovieController {
         model.addAttribute("success", "Film dodany do bazy.");
         model.addAttribute("movie", new Movie());
 
-        return "dashboard/addmovie";
+        return "dashboard/movie/addmovie";
     }
 
-    @GetMapping("/dashboard/editmovie")
-    String goToEditMovie(Model model){
+    @GetMapping("/dashboard/listmovie")
+    String listMovie(Model model){
 
         List<ListMovie> allMovies = movieService.getAllMovie();
 
         model.addAttribute("movies", allMovies);
 
+        return "dashboard/movie/listmovie";
+    }
+
+    @GetMapping("/dashboard/movie/{id}")
+    String movie(@PathVariable(name = "id") long movieId, Model model){
+
+        Movie movieById = movieService.getMovieById(movieId);
+        model.addAttribute("movie", movieById);
+
         return "dashboard/editmovie";
     }
+
+    @PostMapping("/dashboard/editmovie")
+    String editmovie(@ModelAttribute Movie movie, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()){
+            return "dashboard/editmovie";
+        }
+
+        movieService.editMovie(movie);
+
+        return "redirect:/dashboard/listmovie";
+    }
+
 }
