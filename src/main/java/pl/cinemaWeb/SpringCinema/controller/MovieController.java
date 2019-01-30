@@ -71,14 +71,14 @@ public class MovieController {
         Movie movieById = movieService.getMovieById(movieId);
         model.addAttribute("movie", movieById);
 
-        return "dashboard/editmovie";
+        return "dashboard/movie/editmovie";
     }
 
     @PostMapping("/dashboard/editmovie")
     String editmovie(@ModelAttribute Movie movie, BindingResult bindingResult){
 
         if (bindingResult.hasErrors()){
-            return "dashboard/editmovie";
+            return "dashboard/movie/editmovie";
         }
 
         movieService.editMovie(movie);
