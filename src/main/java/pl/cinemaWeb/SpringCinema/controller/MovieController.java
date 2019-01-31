@@ -38,7 +38,7 @@ public class MovieController {
     }
 
     @PostMapping("/dashboard/addmovie")
-    public String saveMovie(@Valid @ModelAttribute Movie movie, @RequestParam("coverImage") MultipartFile file, BindingResult bindingResult, Model model){
+    public String saveMovie(@ModelAttribute Movie movie, @RequestParam("coverImage") MultipartFile file, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()) {
             return "dashboard/movie/addmovie";
         }
@@ -61,6 +61,18 @@ public class MovieController {
         List<ListMovie> allMovies = movieService.getAllMovie();
 
         model.addAttribute("movies", allMovies);
+
+        return "dashboard/movie/listmovie";
+    }
+
+
+    @PostMapping("/dashboard/listmovie")
+    String findMovie(@RequestParam("find") String title, @RequestParam("find") String director,
+                     @RequestParam("find") String ageCategory, Model model){
+
+        List<ListMovie>  getFindMovies = movieService.findMovie(title, director, ageCategory);
+
+        model.addAttribute("movies",getFindMovies);
 
         return "dashboard/movie/listmovie";
     }

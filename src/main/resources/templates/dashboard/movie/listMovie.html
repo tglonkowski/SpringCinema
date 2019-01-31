@@ -19,6 +19,19 @@
               <div th:if="${#lists.isEmpty(movies)}">Empty movie list</div>
               <!--ponizsza tabela wyswietli sie kiedy tabela uzytkownikow w bazie danych bedzie posiadala jakies dane-->
               <div th:if="${not #lists.isEmpty(movies)}">
+
+                <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" th:action="@{/dashboard/listmovie}" method="post">
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="find" placeholder="Wyszukaj film..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <br>
+                <br>
                 <!-- DataTables Example -->
                 <div class="card mb-3">
                   <div class="card-header">

@@ -55,4 +55,11 @@ public class MovieService {
 
         return editMovie;
     }
+
+    public List<ListMovie> findMovie(String title, String director, String ageCategory){
+
+        List<ListMovie> movieFind = listMovieRepository.getMoviesByTitleOrDirectorOrAgeCategory(title, director, ageCategory);
+
+        return movieFind;
+    }
 }
