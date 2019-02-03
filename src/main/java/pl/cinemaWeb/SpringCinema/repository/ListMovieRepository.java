@@ -10,4 +10,3 @@ public interface ListMovieRepository extends JpaRepository<ListMovie, Long> {
 
     List<ListMovie> getMoviesByTitleContainingOrDirectorContainingOrAgeCategoryContaining(String title, String director, String ageCategory);
 }
- 

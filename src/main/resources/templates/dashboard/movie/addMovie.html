@@ -13,10 +13,18 @@
       <div id="content-wrapper">
 
         <div class="container-fluid">
-
-          <!-- Page Content -->
-          <h1>Dodaj film do biblioteki</h1>
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a th:href="@{/dashboard}">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a th:href="@{/dashboard/listMovie}">Lista filmów</a>
+            </li>
+            <li class="breadcrumb-item active">Dodaj film</li>
+          </ol>
           <hr>
+          <!-- Page Content -->
           <div th:if="${success} != null" class="alert alert-success" th:text="${success}"></div>
           <div class="card-body">
           <form th:action="@{/dashboard/addmovie}" method="post" th:object="${movie}" enctype="multipart/form-data">
