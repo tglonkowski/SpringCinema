@@ -2,9 +2,12 @@ package pl.cinemaWeb.SpringCinema.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.cinemaWeb.SpringCinema.model.RoleEnum;
 import pl.cinemaWeb.SpringCinema.service.UserService;
+
+import java.util.Random;
 
 @Controller
 public class Home {
@@ -17,7 +20,8 @@ public class Home {
     }
 
     @GetMapping("/")
-    public String home(){
+    public String home(Model model){
         return "home";
     }
+
 }

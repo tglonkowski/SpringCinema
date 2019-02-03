@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-    </head>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="backFragments/head :: head"/>
     <body>
         <!-- Sidebar -->
         <div th:fragment="sidebar">
@@ -13,19 +12,19 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-fw fa-folder"></i>
+                    <a class="nav-link dropdown-toggle" href="#" id="movie" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-fw fa-film"></i>
                         <span>Film</span>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                        <a class="dropdown-item" href="dashboard/listmovie">Lista filmów</a>
-                        <a class="dropdown-item" href="dashboard/addmovie">Dodaj film</a>
+                    <div class="dropdown-menu" aria-labelledby="movie">
+                        <a class="dropdown-item" th:href="@{/dashboard/listmovie}">Lista filmów</a>
+                        <a class="dropdown-item" th:href="@{/dashboard/addmovie}">Dodaj film</a>
                         </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Charts</span></a>
+                    <a class="nav-link" href="/dashboard/screenings">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Repertuar</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="tables.html">

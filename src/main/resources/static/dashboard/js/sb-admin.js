@@ -1,6 +1,13 @@
 (function($) {
   "use strict"; // Start of use strict
 
+  //datepicker
+  $('#sandbox-container input').datepicker({
+    format: "dd-mm-yyyy",
+    todayBtn: "linked",
+    language: "pl"
+  });
+
   // Toggle the side navigation
   $("#sidebarToggle").on('click',function(e) {
     e.preventDefault();

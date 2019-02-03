@@ -1,8 +1,12 @@
 package pl.cinemaWeb.SpringCinema.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import java.sql.Date;
 
 @Table
@@ -17,7 +21,6 @@ public class Movie {
     @Column(unique = true)
     private String title;
 
-    @NotNull(message = "{movie.releaseDate.notempty}")
     @Column(name = "release_date")
     private Date releaseDate;
 
@@ -32,27 +35,23 @@ public class Movie {
     @NotEmpty(message = "{movie.director.notempty}")
     private String director;
 
+    @Column(length = 1000)
     @NotEmpty(message = "{movie.description.notempty}")
+    @Length(max = 1000, message = "{movie.description.max}")
     private String description;
 
-    @Column(name = "image_url")
-    private String imageUrl;
-
-    @NotEmpty(message = "{movie.coverUrl.notempty}")
-    @Column(name = "cover_url")
     private String coverUrl;
 
     public Movie() {
     }
 
-    public Movie(@NotEmpty(message = "{movie.title.notempty}") String title, @NotNull(message = "{movie.releaseDate.notempty}") Date releaseDate, @NotNull(message = "{movie.duration.notempty}") int duration, AgeCategoryEnum ageCategory, @NotEmpty(message = "{movie.director.notempty}") String director, @NotEmpty(message = "{movie.description.notempty}") String description, String imageUrl, @NotEmpty(message = "{movie.coverUrl.notempty}") String coverUrl) {
+    public Movie(@NotEmpty(message = "{movie.title.notempty}") String title, @NotEmpty(message = "{movie.releaseDate.notempty}") Date releaseDate, @NotNull(message = "{movie.duration.notempty}") int duration, AgeCategoryEnum ageCategory, @NotEmpty(message = "{movie.director.notempty}") String director, @NotEmpty(message = "{movie.description.notempty}") String description, @NotEmpty(message = "{movie.coverUrl.notempty}") String coverUrl) {
         this.title = title;
         this.releaseDate = releaseDate;
         this.duration = duration;
         this.ageCategory = ageCategory;
         this.director = director;
         this.description = description;
-        this.imageUrl = imageUrl;
         this.coverUrl = coverUrl;
     }
 
@@ -112,20 +111,17 @@ public class Movie {
         this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public String getCoverUrl() {
         return coverUrl;
     }
 
     public void setCoverUrl(String coverUrl) {
         this.coverUrl = coverUrl;
+    }
+
+    public int parseDuration(@Pattern(regexp = "[0-9]+", message ="{movie.duration.onlyNumbers") String minutes){
+        int duration = Integer.parseInt(minutes);
+        return duration;
     }
 
     @Override
@@ -138,7 +134,6 @@ public class Movie {
                 ", ageCategory=" + ageCategory +
                 ", director='" + director + '\'' +
                 ", description='" + description + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
                 ", coverUrl='" + coverUrl + '\'' +
                 '}';
     }

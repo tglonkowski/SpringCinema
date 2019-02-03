@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="backFragments/head :: head"/>
 
@@ -15,7 +15,6 @@
           <!-- Page Content -->
           <h1>Edytuj film</h1>
           <hr>
-          <span th:text="${success}"></span>
           <div class="card-body">
           <form th:action="@{/dashboard/editmovie}" method="post" th:object="${movie}" enctype="multipart/form-data">
             <input type="hidden" th:field="*{id}"/>
@@ -28,12 +27,11 @@
                 <div class="col-md-2">
                   <label for="releaseDate">Data premiery:</label>
                   <input type="date" th:field="*{releaseDate}" id="releaseDate" class="form-control" pattern="dd-MM-yyyy" required="required">
-                  <!--<p th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}" class="help-block text-danger"></p>-->
 
                 </div>
               <div class="col-md-3">
                 <label for="duration">Długość filmu:</label>
-                <input type="text" th:field="*{duration}" id="duration" class="form-control" placeholder="Minuty" required="required">
+                <input type="text" th:field="*{duration}" id="duration" class="form-control" placeholder="Minuty" maxlength="3" pattern="[0-9]{2,3}" title="Długość w minutach - na przykłąd: 135" required="required">
                 <p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="help-block text-danger"></p>
               </div>
               <div class="col-md-2">

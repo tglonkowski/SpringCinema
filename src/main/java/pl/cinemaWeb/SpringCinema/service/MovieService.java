@@ -21,8 +21,8 @@ public class MovieService {
         this.listMovieRepository = listMovieRepository;
     }
 
-    public void saveMovie(Movie movie){
-        movieRepository.save(movie);
+    public Movie saveMovie(Movie movie){
+        return movieRepository.save(movie);
     }
 
     public List<ListMovie> getAllMovie(){
@@ -48,7 +48,7 @@ public class MovieService {
 
         Movie movieFromDB = getMovieById(movie.getId());
 
-        movie.setImageUrl(movieFromDB.getImageUrl());
+        movie.setCoverUrl(movieFromDB.getCoverUrl());
         movie.setCoverUrl(movieFromDB.getCoverUrl());
 
         Movie editMovie = movieRepository.save(movie);
@@ -58,7 +58,7 @@ public class MovieService {
 
     public List<ListMovie> findMovie(String title, String director, String ageCategory){
 
-        List<ListMovie> movieFind = listMovieRepository.getMoviesByTitleOrDirectorOrAgeCategory(title, director, ageCategory);
+        List<ListMovie> movieFind = listMovieRepository.getMoviesByTitleContainingOrDirectorContainingOrAgeCategoryContaining(title, director, ageCategory);
 
         return movieFind;
     }

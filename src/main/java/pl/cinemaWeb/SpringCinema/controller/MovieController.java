@@ -18,6 +18,7 @@ import java.util.List;
 
 
 @Controller
+@RequestMapping("/dashboard")
 public class MovieController {
 
     private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
@@ -30,32 +31,32 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @GetMapping("/dashboard/addmovie")
+    @GetMapping("/addmovie")
     public String addMovie(Model model){
         Movie movie = new Movie();
         model.addAttribute("movie", movie);
         return "dashboard/movie/addmovie";
     }
 
-    @PostMapping("/dashboard/addmovie")
-    public String saveMovie(@ModelAttribute Movie movie, @RequestParam("coverImage") MultipartFile file, BindingResult bindingResult, Model model){
+    @PostMapping("/addmovie")
+    public String saveMovie(@Valid @ModelAttribute Movie movie, BindingResult bindingResult, @RequestParam("coverImage") MultipartFile file, Model model){
         if (bindingResult.hasErrors()) {
             return "dashboard/movie/addmovie";
         }
+        String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        String fileName = "image_" + movie.getTitle() + "_" + movie.getDirector() + "_" + movie.getReleaseDate() + ext;
 
-        String fileName = "image_" + movie.getTitle() + "_" + movie.getDirector() + "_" + movie.getReleaseDate();
-        fileName.replace(" ", "_");
+        fileName = fileName.replaceAll("\\s", "-");
         fileStorageService.storeFile(file, fileName);
         String movieCover = "static/movieImages/" + fileName;
         movie.setCoverUrl(movieCover);
-        movieService.saveMovie(movie);
+        Movie savedMovie = movieService.saveMovie(movie);
         model.addAttribute("success", "Film dodany do bazy.");
         model.addAttribute("movie", new Movie());
-
         return "dashboard/movie/addmovie";
     }
 
-    @GetMapping("/dashboard/listmovie")
+    @GetMapping("/listmovie")
     String listMovie(Model model){
 
         List<ListMovie> allMovies = movieService.getAllMovie();
@@ -66,7 +67,7 @@ public class MovieController {
     }
 
 
-    @PostMapping("/dashboard/listmovie")
+    @PostMapping("/listmovie")
     String findMovie(@RequestParam("find") String title, @RequestParam("find") String director,
                      @RequestParam("find") String ageCategory, Model model){
 
@@ -77,7 +78,7 @@ public class MovieController {
         return "dashboard/movie/listmovie";
     }
 
-    @GetMapping("/dashboard/{id}")
+    @GetMapping("/{id}")
     String movie(@PathVariable(name = "id") long movieId, Model model){
 
         Movie movieById = movieService.getMovieById(movieId);
@@ -86,8 +87,8 @@ public class MovieController {
         return "dashboard/movie/editmovie";
     }
 
-    @PostMapping("/dashboard/editmovie")
-    String editmovie(@ModelAttribute Movie movie, BindingResult bindingResult){
+    @PostMapping("/editmovie")
+    String editmovie(@Valid @ModelAttribute Movie movie, BindingResult bindingResult){
 
         if (bindingResult.hasErrors()){
             return "dashboard/movie/editmovie";

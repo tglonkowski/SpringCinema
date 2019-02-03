@@ -1,7 +1,6 @@
 package pl.cinemaWeb.SpringCinema.model.databaseviews;
 
 import org.springframework.data.annotation.Immutable;
-import pl.cinemaWeb.SpringCinema.model.AgeCategoryEnum;
 
 import javax.persistence.*;
 

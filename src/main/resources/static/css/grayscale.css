@@ -94,8 +94,8 @@
   height: auto;
   min-height: 35rem;
   padding: 15rem 0;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(14, 12, 29, 0.1)), color-stop(75%, rgba(14, 12, 29, 0.5)), to(#0e0c1d)), url("../movieImages/aveiw.jpg");
-  background: linear-gradient(to bottom, rgba(14, 12, 29, 0.1) 0%, rgba(14, 12, 29, 0.5) 75%, #0e0c1d 100%), url("../movieImages/aveiw.jpg");
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(14, 12, 29, 0.1)), color-stop(75%, rgba(14, 12, 29, 0.5)), to(#0e0c1d)), url("../home_bg/avengers.jpg");
+  background: linear-gradient(to bottom, rgba(14, 12, 29, 0.1) 0%, rgba(14, 12, 29, 0.5) 75%, #0e0c1d 100%), url("../home_bg/avengers.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;

@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface ListMovieRepository extends JpaRepository<ListMovie, Long> {
 
-    List<ListMovie> getMoviesByTitleOrDirectorOrAgeCategory(String title, String director, String ageCategory);
+    List<ListMovie> getMoviesByTitleContainingOrDirectorContainingOrAgeCategoryContaining(String title, String director, String ageCategory);
 }
+ 

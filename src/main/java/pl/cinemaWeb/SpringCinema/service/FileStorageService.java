@@ -32,11 +32,8 @@ public class FileStorageService {
         }
     }
 
-    public String storeFile(MultipartFile file, String name){
+    public String storeFile(MultipartFile file, String fileName){
         // Normalize file name
-        String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        String fileName = name + ext;
-
         try {
             // Check if the file's name contains invalid characters
             if(fileName.contains("..")) {
@@ -46,7 +43,6 @@ public class FileStorageService {
             // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println(5+fileName);
             return fileName;
         } catch (IOException ex) {
             throw new FileStorageException("Błąd zapisu " + fileName + ". Spróbuj ponownie", ex);

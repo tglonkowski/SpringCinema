@@ -85,7 +85,7 @@
     #mainNav.navbar-shrink .nav-link.active {
         color: #fff;
         outline: none;
-        border-bottom: 0.25rem solid #ff253a;
+        border-bottom: 0.25rem solid #fff;
     }
 }
 .masthead {
@@ -94,8 +94,8 @@
     height: auto;
     min-height: 35rem;
     padding: 15rem 0;
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(14, 12, 29, 0.1)), color-stop(75%, rgba(14, 12, 29, 0.5)), to(#0e0c1d)), url("../movieImages/aveiw.jpg");
-    background: linear-gradient(to bottom, rgba(14, 12, 29, 0.1) 0%, rgba(14, 12, 29, 0.5) 75%, #0e0c1d 100%), url("../movieImages/aveiw.jpg");
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(14, 12, 29, 0.1)), color-stop(75%, rgba(14, 12, 29, 0.5)), to(#0e0c1d)), url("../home_bg/avengers.jpg");
+    background: linear-gradient(to bottom, rgba(14, 12, 29, 0.1) 0%, rgba(14, 12, 29, 0.5) 75%, #0e0c1d 100%), url("../home_bg/avengers.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: scroll;
@@ -428,7 +428,7 @@ input[type="file"] {
 }
 
 .container .screening-table tr:hover {
-    background-color: #2a2259;
+    background-color: #463e77;
     -webkit-box-shadow: 0 6px 6px -6px #0E1119;
     -moz-box-shadow: 0 6px 6px -6px #0E1119;
     box-shadow: 0 6px 6px -6px #0E1119;
@@ -460,7 +460,4 @@ input[type="file"] {
 }
 .tab{
     margin-rightt: 1rem;
-}
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
-    background-color: #ff253a;
 }
