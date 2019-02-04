@@ -1,95 +1,81 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="backFragments/head :: head"/>
 
-  <body id="page-top">
+<body id="page-top">
 <div th:replace="backFragments/navigation :: navi"/>
-    <div id="wrapper">
-      <div th:replace="backFragments/sidebar :: sidebar" class="sidebar"/>
+<div id="wrapper">
+  <div th:replace="backFragments/sidebar :: sidebar" class="sidebar"/>
 
-      <div id="content-wrapper">
+  <div id="content-wrapper">
 
-        <div class="container-fluid">
-          <!-- Breadcrumbs-->
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a th:href="@{/dashboard}">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Lista filmów</li>
-          </ol>
-            <hr>
-          <!-- Page Content -->
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a th:href="@{/dashboard}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Lista filmów</li>
+      </ol>
+      <hr>
+      <!-- DataTables Example -->
+      <div class="card-body">
+        <div class="col-md-12">
           <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
-              <!--poniższa linijka wyswietli sie gdy tabela filmow jest pusta-->
-              <div th:if="${#lists.isEmpty(movies)}">Empty movie list</div>
-              <!--ponizsza tabela wyswietli sie kiedy tabela filmoww bazie danych bedzie posiadala jakies dane-->
-              <div th:if="${not #lists.isEmpty(movies)}">
-
-                <div class="row">
-                <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" th:action="@{/dashboard/listmovie}" method="post">
-                  <div class="input-group">
-                    <input type="text" class="form-control" name="find" placeholder="Wyszukaj film..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="submit">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-                  <form th:action="@{/dashboard/listmovie}">
-                    <div>
-                      <button class="btn btn-primary" type="submit">Pokaż wszystko</button>
-                    </div>
-                  </form>
+            <form class="d-none d-md-inline-block form-inline mr-0 mr-md-3 my-2 my-md-0" th:action="@{/dashboard/listmovie}" method="post">
+              <div class="input-group">
+                <input type="text" class="form-control" name="find"  id="searchmovie" placeholder="Wyszukaj film..." aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
                 </div>
-                <br>
-                <br>
-                <!-- DataTables Example -->
-                <div class="card mb-3">
-                  <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    Lista dostępnych filmów</div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                          <th>Tytuł</th>
-                          <th>Kategoria wiekowa</th>
-                          <th>Reżyser</th>
-                          <th>Edytuj</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                          <th>Tytuł</th>
-                          <th>Kategoria wiekowa</th>
-                          <th>Reżyser</th>
-                          <th>Edytuj</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        <tr th:each="movie : ${movies}">
-                          <td th:text="${movie.title}"/>
-                          <td th:text="${movie.ageCategory}"/>
-                          <td th:text="${movie.director}"/>
-                          <td><a id="edit-movie" style="text-decoration: none black" th:href="${'/dashboard/'+movie.id}">Edytuj</a></td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+              </div>
+            </form>
+            <form th:action="@{/dashboard/listmovie}">
+                <button class="btn btn-primary" type="submit">Pokaż wszystko</button>
+            </form>
           </div>
-
-          </div>
+        </div>
+        <br/>
+        <div th:if="${#lists.isEmpty(movies)}">
+          Brak filmów w bazie danych
+        </div>
+        <div th:if="${not #lists.isEmpty(movies)}"><div class="table-responsive">
+          <table class="table table-bordered" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+              <th>Tytuł</th>
+              <th>Kategoria wiekowa</th>
+              <th>Reżyser</th>
+              <th>Edytuj</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+              <th>Tytuł</th>
+              <th>Kategoria wiekowa</th>
+              <th>Reżyser</th>
+              <th>Edytuj</th>
+            </tr>
+            </tfoot>
+            <tbody>
+            <tr th:each="movie : ${movies}">
+              <td th:text="${movie.title}"/>
+              <td th:text="${movie.ageCategory}"/>
+              <td th:text="${movie.director}"/>
+              <td><a id="edit-movie" style="text-decoration: none black" th:href="${'/dashboard/'+movie.id}">Edytuj</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
         </div>
         <!-- /.container-fluid -->
       </div>
-      <!-- /.content-wrapper -->
     </div>
-    <!-- /#wrapper -->
-    <div th:replace="backFragments/footer :: footer"/>
-  </body>
+    <!--<form><input type="hidden" name="hiddenTimelineDate" th:fieldth:value="${timelineDate}"></form>-->
+    <div th:replace="backFragments/footer :: footer"></div>
+  </div>
+</div>
+</body>
 </html>
