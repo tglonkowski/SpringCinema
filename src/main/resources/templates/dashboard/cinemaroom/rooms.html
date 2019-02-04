@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="backFragments/head :: head"/>
+<body id="page-top">
+<div th:replace="backFragments/navigation :: navi"/>
+<div id="wrapper">
+    <div th:replace="backFragments/sidebar :: sidebar" class="sidebar"/>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a th:href="@{/dashboard}">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Sale kinowe</li>
+            </ol>
+            <hr>
+            <div th:if="${edited} != null" class="alert alert-info" role="alert" th:text="${edited}"></div>
+            <div th:if="${added} != null" class="alert alert-success" role="alert" th:text="${added}"></div>
+
+            <div th:if="${#lists.isEmpty(allRooms)}"><div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th class="col-1">ID</th>
+                            <th class="col-3">Name</th>
+                            <th class="col-2">Ilość miejsc</th>
+                            <th class="col-2">Edycja</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><a th:href="@{/dashboard/cinemaroom/addroom}">Dodaj salę</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                <div th:if="${not #lists.isEmpty(allRooms)}"><div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Ilość miejsc</th>
+                                <th>Edycja</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Ilość miejsc</th>
+                                <th>Edycja</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr th:each="room : ${allRooms}">
+                                <td th:text="${room.id}"/>
+                                <td th:text="${room.name}"/>
+                                <td th:text="${room.seats.size()}"/>
+                                <td><a id="edit-room" style="text-decoration: none black" th:href="${'/dashboard/cinemaroom/edit'+room.id}">Edytuj salę</a></td>
+                            </tr>
+                            <tr>
+                                <td><a th:href="@{/dashboard/screenings/add}">Dodaj film</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                </div>
+        </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <div th:replace="backFragments/footer :: footer"/>
+</body>
+</html>
