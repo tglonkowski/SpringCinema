@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="backFragments/head :: head"/>
+<body id="page-top">
+<div th:replace="backFragments/navigation :: navi"/>
+<div id="wrapper">
+    <div th:replace="backFragments/sidebar :: sidebar" class="sidebar"/>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a th:href="@{/dashboard}">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a th:href="@{/dashboard/cinemarooms}">Sale kinowe</a>
+                </li>
+                <li class="breadcrumb-item active">Edycja sali</li>
+            </ol>
+            <hr>
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nazwa sali</th>
+                            <th>Ilość miejsc</th>
+                            <th>Edycja</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr><form th:action="@{/dashboard/cinemaroom/editRoom}" method="post" th:object="${editRoom}">
+                                <td th:text="${editRoom.id}"></td><input type="hidden" th:field="*{id}"/>
+                                <td><input type="text" class="form-control" th:field="*{name}" required="true"/></td>
+                                <td><input type="text" class="form-control" name="newSeatCount" th:value="${newSeatCount}"  maxlength="3" pattern="[0-9]{1,3}" required="true"/></td>
+                                <td><button type="submit" class="btn btn-primary btn-block">Zapisz</button></td>
+                            </form>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- /#wrapper -->
+<div th:replace="backFragments/footer :: footer"/>
+</div>
+</body>
+</html>

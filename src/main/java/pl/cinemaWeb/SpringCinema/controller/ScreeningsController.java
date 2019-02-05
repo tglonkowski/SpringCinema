@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.cinemaWeb.SpringCinema.model.Screenings;
 import pl.cinemaWeb.SpringCinema.service.ScreeningService;
-import pl.cinemaWeb.SpringCinema.service.UtilitiesService;
 
 import java.sql.Date;
 import java.util.List;
@@ -17,12 +16,10 @@ import java.util.List;
 public class ScreeningsController{
 
     ScreeningService screeningService;
-    UtilitiesService utilitiesService;
 
     @Autowired
-    public ScreeningsController(ScreeningService screeningService, UtilitiesService utilitiesService) {
+    public ScreeningsController(ScreeningService screeningService) {
         this.screeningService = screeningService;
-        this.utilitiesService = utilitiesService;
     }
 
     @GetMapping("/dashboard/screenings")

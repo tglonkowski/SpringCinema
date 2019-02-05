@@ -20,56 +20,81 @@
             <hr>
             <div th:if="${edited} != null" class="alert alert-info" role="alert" th:text="${edited}"></div>
             <div th:if="${added} != null" class="alert alert-success" role="alert" th:text="${added}"></div>
-
-            <div th:if="${#lists.isEmpty(allRooms)}"><div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th class="col-1">ID</th>
-                            <th class="col-3">Name</th>
-                            <th class="col-2">Ilość miejsc</th>
-                            <th class="col-2">Edycja</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td><a th:href="@{/dashboard/cinemaroom/addroom}">Dodaj salę</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                </div>
-                <div th:if="${not #lists.isEmpty(allRooms)}"><div class="table-responsive">
+            <div th:if="${#lists.isEmpty(allRooms)}">
+                <div class="table-responsive">
                         <table class="table table-bordered" width="100%" cellspacing="0">
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>Nazwa sali</th>
                                 <th>Ilość miejsc</th>
                                 <th>Edycja</th>
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Ilość miejsc</th>
-                                <th>Edycja</th>
-                            </tr>
-                            </tfoot>
                             <tbody>
-                            <tr th:each="room : ${allRooms}">
-                                <td th:text="${room.id}"/>
-                                <td th:text="${room.name}"/>
-                                <td th:text="${room.seats.size()}"/>
-                                <td><a id="edit-room" style="text-decoration: none black" th:href="${'/dashboard/cinemaroom/edit'+room.id}">Edytuj salę</a></td>
-                            </tr>
-                            <tr>
-                                <td><a th:href="@{/dashboard/screenings/add}">Dodaj film</a></td>
-                            </tr>
+                                <div th:if="${#httpServletRequest.getParameter('action')=='add'}">
+                                    <tr><form th:action="@{/dashboard/cinemaroom}" method="post" th:object="${newRoom}">
+                                        <td></td>
+                                        <td><input type="text" class="form-control" th:field="*{name}" required="true"/></td>
+                                        <td><input type="text" class="form-control" name="newSeatCount"  maxlength="3" pattern="[0-9]{1,3}" required="true"/></td>
+                                        <td><button type="submit" class="btn btn-primary btn-block">Dodaj</button></td>
+                                    </form>
+                                    </tr>
+                                </div>
+                                <div th:if="${not (#httpServletRequest.getParameter('action')=='add')}">
+                                    <tr>
+                                        <td><a th:href="@{/dashboard/cinemaroom(action=add)}">Dodaj salę</a></td>
+                                    </tr>
+                                </div>
                             </tbody>
                         </table>
                 </div>
+            </div>
+                <div th:if="${#lists.size(allRooms)>0}">
+                    <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th class="col-1">ID</th>
+                                    <th class="col-5">Nazwa sali</th>
+                                    <th class="col-3">Ilość miejsc</th>
+                                    <th class="col-3">Edycja</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nazwa sali</th>
+                                    <th>Ilość miejsc</th>
+                                    <th>Edycja</th>
+                                </tr>
+                                </tfoot>
+                                    <tbody>
+                                        <tr th:each="room : ${allRooms}">
+                                            <td th:text="*{room.id}"/>
+                                            <td th:text="*{room.name}"/>
+                                            <td th:text="*{room.seats.size()}"/>
+                                            <td><a style="text-decoration: none black" th:href="${'/dashboard/cinemaroom/editRoom'+room.id}">Edytuj</a></td>
+                                        </tr>
+                                    <div th:if="${#httpServletRequest.getParameter('action')=='add'}">
+                                        <tr><form th:action="@{/dashboard/cinemaroom}" method="post" th:object="${newRoom}">
+                                            <td></td>
+                                            <td><input type="text" class="form-control" th:field="*{name}" required="true"/></td>
+                                            <td><input type="text" class="form-control" name="newSeatCount" maxlength="3" pattern="[0-9]{1,3}" required="true"/></td>
+                                            <td><button type="submit" class="btn btn-primary btn-block">Dodaj</button></td>
+                                        </form>
+                                        </tr>
+                                    </div>
+                                    <div th:if="${not (#httpServletRequest.getParameter('action')=='add')}">
+                                        <tr>
+                                            <td><a th:href="@{/dashboard/cinemaroom(action=add)}">Dodaj salę</a></td>
+                                        </tr>
+                                    </div>
+
+                                    </tbody>
+                            </table>
+                </div>
+            </div>
         </div>
             <!-- /.container-fluid -->
         </div>
@@ -77,5 +102,6 @@
     </div>
     <!-- /#wrapper -->
     <div th:replace="backFragments/footer :: footer"/>
+</div>
 </body>
 </html>
