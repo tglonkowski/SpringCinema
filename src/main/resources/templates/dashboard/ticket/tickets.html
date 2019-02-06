@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="backFragments/head :: head"/>
+<body id="page-top">
+<div th:replace="backFragments/navigation :: navi"/>
+<div id="wrapper">
+    <div th:replace="backFragments/sidebar :: sidebar" class="sidebar"/>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a th:href="@{/dashboard}">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Bilety</li>
+            </ol>
+            <hr>
+            <div th:if="${edited} != null" class="alert alert-info" role="alert" th:text="${edited}"></div>
+            <div th:if="${added} != null" class="alert alert-success" role="alert" th:text="${added}"></div>
+            <div th:if="${#lists.isEmpty(allTickets)}">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Rodzaj biletu</th>
+                            <th>Cena</th>
+                            <th>Edycja</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <div th:if="${#httpServletRequest.getParameter('action')=='add'}">
+                            <tr><form th:action="@{/dashboard/tickets}" method="post" th:object="${newTicket}">
+                                <td></td>
+                                <td><input type="text" class="form-control" th:field="*{name}" required="true"/></td>
+                                <td><input type="text" class="form-control" th:field="*{price}"  required="true"/></td>
+                                <td><button type="submit" class="btn btn-primary btn-block">Dodaj</button></td>
+                            </form>
+                            </tr>
+                        </div>
+                        <div th:if="${not (#httpServletRequest.getParameter('action')=='add')}">
+                            <tr>
+                                <td><a th:href="@{/dashboard/tickets(action=add)}">Dodaj bilet</a></td>
+                            </tr>
+                        </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div th:if="${not #lists.isEmpty(allTickets)}">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Rodzaj biletu</th>
+                            <th>Cena</th>
+                            <th>Edycja</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Rodzaj sali</th>
+                            <th>Cena</th>
+                            <th>Edycja</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        <tr th:each="ticket : ${allTickets}">
+                            <td th:text="*{ticket.id}"/>
+                            <td th:text="*{ticket.name}"/>
+                            <td th:text="*{ticket.price}"/>
+                            <td><a style="text-decoration: none black" th:href="${'/dashboard/tickets/editTicket'+ticket.id}">Edytuj</a></td>
+                        </tr>
+                        <div th:if="${#httpServletRequest.getParameter('action')=='add'}">
+                            <tr><form th:action="@{/dashboard/tickets}" method="post" th:object="${newTicket}">
+                                <td></td>
+                                <td><input type="text" class="form-control" th:field="*{name}" required="true"/></td>
+                                <td><input type="text" class="form-control" th:field="*{price}" required="true"/></td>
+                                <td><button type="submit" class="btn btn-primary btn-block">Dodaj</button></td>
+                            </form>
+                            </tr>
+                        </div>
+                        <div th:if="${not (#httpServletRequest.getParameter('action')=='add')}">
+                            <tr>
+                                <td><a th:href="@{/dashboard/tickets(action=add)}">Dodaj bilet</a></td>
+                            </tr>
+                        </div>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- /#wrapper -->
+<div th:replace="backFragments/footer :: footer"/>
+</div>
+</body>
+</html>
