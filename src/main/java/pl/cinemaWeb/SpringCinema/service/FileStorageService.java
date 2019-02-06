@@ -48,4 +48,19 @@ public class FileStorageService {
             throw new FileStorageException("Błąd zapisu " + fileName + ". Spróbuj ponownie", ex);
         }
     }
+
+    public String fileNameNormalize(String fileName){
+        fileName = fileName.replaceAll("\\s", "-");
+        fileName = fileName.replace("/", "");
+        fileName = fileName.replace(":", "");
+        fileName = fileName.replace("?", "");
+        fileName = fileName.replace("\\", "");
+        fileName = fileName.replace("*", "");
+        fileName = fileName.replaceAll("\"", "");
+        fileName = fileName.replace("*", "");
+        fileName = fileName.replace("<", "");
+        fileName = fileName.replace(">", "");
+        fileName = fileName.replace("|", "");
+        return fileName;
+    }
 }

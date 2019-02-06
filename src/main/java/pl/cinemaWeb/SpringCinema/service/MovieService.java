@@ -1,5 +1,7 @@
 package pl.cinemaWeb.SpringCinema.service;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.apache.el.parser.BooleanNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.cinemaWeb.SpringCinema.model.Movie;
@@ -61,5 +63,14 @@ public class MovieService {
         List<ListMovie> movieFind = listMovieRepository.getMoviesByTitleContainingOrDirectorContainingOrAgeCategoryContaining(title, director, ageCategory);
 
         return movieFind;
+    }
+
+    public Boolean checkDuplicateMovie(String title){
+        Movie movie = movieRepository.getMovieByTitle(title);
+        if (movie == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

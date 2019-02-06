@@ -43,10 +43,13 @@ public class MovieController {
         if (bindingResult.hasErrors()) {
             return "dashboard/movie/addmovie";
         }
+        if (movieService.checkDuplicateMovie(movie.getTitle())==true){
+            model.addAttribute("duplicate", "Taki film jest już w bazie.");
+            return "dashboard/movie/addmovie";
+        }
         String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
         String fileName = "image_" + movie.getTitle() + "_" + movie.getDirector() + "_" + movie.getReleaseDate() + ext;
-
-        fileName = fileName.replaceAll("\\s", "-");
+        fileName = fileStorageService.fileNameNormalize(fileName);
         fileStorageService.storeFile(file, fileName);
         String movieCover = "static/movieImages/" + fileName;
         movie.setCoverUrl(movieCover);
