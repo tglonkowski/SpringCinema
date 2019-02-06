@@ -1,7 +1,5 @@
 package pl.cinemaWeb.SpringCinema.service;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.apache.el.parser.BooleanNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.cinemaWeb.SpringCinema.model.Movie;

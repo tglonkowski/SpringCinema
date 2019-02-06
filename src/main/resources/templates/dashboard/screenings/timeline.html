@@ -21,13 +21,11 @@
             <div th:if="${deleted} != null" class="alert alert-info" role="alert" th:text="${deleted}"></div>
             <div th:if="${added} != null" class="alert alert-success" role="alert" th:text="${added}"></div>
 
-            <!-- DataTables Example -->
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-4">
                     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" th:action="@{/dashboard/screenings}" method="post">
                         <div class="input-group">
-                            <label for="timelineDate">Wybierz datę: </label>
+                            <label for="timelineDate">Wybierz dzień:&nbsp;</label>
                             <input type="date" th:value="${timelineDate}" th:field="${timelineDate}" class="form-control" id="timelineDate" name="timelineDate" placeholder="Wybierz datę" aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
@@ -38,9 +36,13 @@
                     </form>
                     </div>
                 </div>
-                <br/>
-                <div th:if="${not #lists.isEmpty(screenings)}"><div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
+            <br/>
+            <div th:if="${not #lists.isEmpty(screenings)}">
+                <div class="card mb-3">
+                    <div class="card-header"><i class="fas fa-calendar-alt"></i>&nbsp;Repertuar na dzień: <span th:text="${timelineDate}"></span></div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
                             <th>Godzina</th>
@@ -55,13 +57,27 @@
                         <tbody>
                         <tr>
                             <td><a th:href="@{/dashboard/screenings/add}">Dodaj film</a></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         </tbody>
                     </table>
+                        </div>
+                    </div>
                 </div>
-                </div>
-                <div th:if="${#lists.isEmpty(screenings)}"><div class="table-responsive">
-                        <table class="table table-bordered" width="100%" cellspacing="0">
+            </div>
+                <div th:if="${#lists.isEmpty(screenings)}">
+                    <div class="card mb-3">
+                    <div class="card-header"><i class="fas fa-calendar-alt"></i>
+                        Repertuar na dzień: <span th:text="${timelineDate}"></span></div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="qq" width="100%" cellspacing="0">
                             <thead>
                             <tr>
                                 <th>Godzina</th>
@@ -99,17 +115,25 @@
                             </tr>
                             <tr>
                                 <td><a th:href="@{/dashboard/screenings/add}">Dodaj film</a></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             </tbody>
                         </table>
+                    </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                 </div>
+            </div>
         </div>
         <!-- /.container-fluid -->
     </div>
-</div>
-<!--<form><input type="hidden" name="hiddenTimelineDate" th:fieldth:value="${timelineDate}"></form>-->
-<div th:replace="backFragments/footer :: footer"></div>
     </div>
-</div>
+<div th:replace="backFragments/footer :: footer"></div>
 </body>
 </html>

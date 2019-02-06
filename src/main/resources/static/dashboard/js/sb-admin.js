@@ -1,11 +1,9 @@
 (function($) {
   "use strict"; // Start of use strict
 
-  //datepicker
-  $('#sandbox-container input').datepicker({
-    format: "dd-mm-yyyy",
-    todayBtn: "linked",
-    language: "pl"
+  // Call the dataTables jQuery plugin
+  $(document).ready(function() {
+    $('#dataTable').DataTable();
   });
 
   // Toggle the side navigation
