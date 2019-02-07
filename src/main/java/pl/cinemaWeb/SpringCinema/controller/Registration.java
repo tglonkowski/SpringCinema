@@ -8,16 +8,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.cinemaWeb.SpringCinema.model.User;
+import pl.cinemaWeb.SpringCinema.service.MailService;
 import pl.cinemaWeb.SpringCinema.service.UserService;
 
 @Controller
 public class Registration {
 
     UserService userService;
+    MailService mailService;
 
     @Autowired
-    public Registration(UserService userService) {
+    public Registration(UserService userService, MailService mailService) {
         this.userService = userService;
+        this.mailService = mailService;
     }
 
     @GetMapping("/register")
@@ -40,4 +43,10 @@ public class Registration {
             return "dashboard/register";
         }
     }
+
+    @GetMapping("/forgotpassword")
+    public String forgotPassword(){
+        return "dashboard/forgotpassword";
+    }
+
 }
