@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.cinemaWeb.SpringCinema.model.RoleEnum;
 import pl.cinemaWeb.SpringCinema.model.User;
 import pl.cinemaWeb.SpringCinema.service.UserService;
 
@@ -30,7 +29,8 @@ public class Registration {
     }
 
     @PostMapping("/register")
-    public String addNewUser(@ModelAttribute User user, @RequestParam("confirmPassword") String confirmPassword, Model model){
+    public String addNewUser(@ModelAttribute User user,
+                             @RequestParam("confirmPassword") String confirmPassword, Model model){
         if(confirmPassword.equals(user.getPassword())){
             userService.saveUser(user);
 
@@ -39,6 +39,5 @@ public class Registration {
             model.addAttribute("passwdMismatch",true);
             return "dashboard/register";
         }
-
     }
 }
