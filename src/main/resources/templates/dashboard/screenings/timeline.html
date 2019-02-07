@@ -26,7 +26,7 @@
                     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" th:action="@{/dashboard/screenings}" method="post">
                         <div class="input-group">
                             <label for="timelineDate">Wybierz dzień:&nbsp;</label>
-                            <input type="date" th:value="${timelineDate}" th:field="${timelineDate}" class="form-control" id="timelineDate" name="timelineDate" placeholder="Wybierz datę" aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="date" th:field="${timelineDate}" class="form-control" id="timelineDate" name="timelineDate" placeholder="Wybierz datę" aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
                                     <i class="fas fa-calendar-alt"></i>
@@ -56,8 +56,8 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td><a th:href="@{/dashboard/screenings/add}">Dodaj film</a></td>
                             <td></td>
+                            <td><a th:href="@{/dashboard/screenings/add}">Dodaj film</a></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -77,7 +77,7 @@
                         Repertuar na dzień: <span th:text="${timelineDate}"></span></div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="qq" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
                                 <th>Godzina</th>
@@ -114,8 +114,8 @@
                                 <td><a id="delete-screening" style="text-decoration: none black" th:href="${'/dashboard/screenings/delete'+screening.sid}">Usuń</a></td>
                             </tr>
                             <tr>
-                                <td><a th:href="@{/dashboard/screenings/add}">Dodaj film</a></td>
                                 <td></td>
+                                <td><a th:href="@{/dashboard/screenings/add}">Dodaj film</a></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

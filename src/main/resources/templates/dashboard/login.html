@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>SpringCinema - Logowanie</title>
+  <title>SpringCinema - Panel Logowania</title>
 
-    <!-- Bootstrap core CSS-->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS-->
+  <link th:href="@{/dashboard/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <!-- Custom fonts for this template-->
+  <link th:href="@{/dashboard/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin.min.css" rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link th:href="@{/dashboard/css/sb-admin.css}" rel="stylesheet">
 
-  </head>
+</head>
 
-  <body class="bg-dark">
-    <div class="container">
-      <div class="card card-login mx-auto mt-5">
-        <div class="card-header">Logowanie</div>
+  <body class="masthead">
+    <div class="container" id="vh">
+      <div class="card-transparent card-login mx-auto force-middle">
+        <div class="card-header font-weight-bold font-black-transparent">SpringCinema - Panel Logowania</div>
         <div class="card-body">
             <form name="login" th:action="@{/login}" method="post">
               <div th:if="${param.error}">
@@ -33,28 +33,30 @@
                   Niepoprawny e-mail lub hasło!
                 </div>
               </div>
-            <div class="form-group">
-              <div class="form-label-group">
-                <label>Adres e-mail</label>
-                <input type="email" name="email" class="form-control" placeholder="Adres e-mail" required="required" autofocus="autofocus">
+                <div class="form-group">
+                <input type="email" name="email" class="form-control-transparent" placeholder="Adres e-mail" required="required" autofocus="autofocus">
+                </div>
+                <div class="form-group">
+                <input type="password" name="password" class="form-control-transparent" placeholder="Hasło" required="required">
               </div>
-            </div>
-            <div class="form-group">
-              <div class="form-label-group">
-                <label>Hasło</label>
-                <input type="password" name="password" class="form-control" placeholder="Hasło" required="required">
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Zaloguj</button>
+                <div class="form-group">
+            <button type="submit" class="btn-red btn-primary-red btn-block">Zaloguj</button>
+                </div>
           </form>
           <div class="text-center">
-            <a class="d-block small mt-3" href=/register>Załóż konto</a>
-            <a class="d-block small" href="forgot-password.html">Zapomniałem hasła</a>
+            <a class="d-block small mt-3 font-weight-bold font-blue-transparent" href=/register>Załóż konto</a>
+            <a class="d-block small font-weight-bold font-blue-transparent" href="forgot-password.html">Zapomniałem hasła</a>
           </div>
         </div>
-        <div th:replace="backFragments/footer :: footer"/>>
       </div>
     </div>
+    <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/dashboard/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/dashboard/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
   </body>
 
 </html>

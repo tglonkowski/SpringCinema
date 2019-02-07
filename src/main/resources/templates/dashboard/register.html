@@ -32,56 +32,46 @@
             <div class="form-group">
               <div class="form-row">
                 <div class="col-md-6">
-                  <div class="form-label-group">
                     <input type="text" th:field="*{name}" id="firstName" class="form-control" placeholder="Imię" required="required" autofocus="autofocus">
-                    <label for="firstName">Imię</label>
-                  </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-label-group">
                     <input type="text" th:field="*{lastName}" id="lastName" class="form-control" placeholder="Nazwisko" required="required">
-                    <label for="lastName">Nazwisko</label>
-                  </div>
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <div class="form-label-group">
                 <input type="email" th:field="*{email}" id="inputEmail" class="form-control" placeholder="Adres e-mail" required="required">
-                <label for="inputEmail">Adres e-mail</label>
-              </div>
             </div>
+            <div class="form-row">
             <div class="form-group">
-              <div class="form-row">
                 <div class="col-md-12">
                   <div th:if="${passwdMismatch==true}" class="alert alert-danger">Hasła nie są identyczne!</div>
                 </div>
               </div>
               <div class="form-row">
                 <div class="col-md-6">
-                  <div class="form-label-group">
                     <input type="password" th:field="*{password}" id="inputPassword" class="form-control" placeholder="Hasło" required="required">
-                    <label for="inputPassword">Hasło</label>
-                  </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-label-group">
-                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Powtórz hasłod" required="required">
-                    <label for="confirmPassword">Powtórz hasło</label>
-                </div>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Powtórz hasło" required="required">
                 </div>
               </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Załóż konto</button>
           </form>
           <div class="text-center">
-            <a class="d-block small mt-3" href="login.html">Logowanie</a>
+            <a class="d-block small mt-3" href="/login">Logowanie</a>
             <a class="d-block small" href="forgot-password.html">Zapomniałeś hasła?</a>
           </div>
         </div>
-        <div th:replace="backFragments/footer :: footer"/>
       </div>
     </div>
+    <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/dashboard/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/dashboard/vendor/jquery-easing/jquery.easing.min.js}"></script>
   </body>
 
 </html>
