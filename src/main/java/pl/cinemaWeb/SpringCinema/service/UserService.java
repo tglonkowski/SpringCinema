@@ -28,4 +28,9 @@ public class UserService {
         userRepository.save(user);
 
     }
+
+    public User getUserByEmail(String email){
+        User userByEmail = userRepository.getUserByEmail(email);
+        return userByEmail;
+    }
 }
