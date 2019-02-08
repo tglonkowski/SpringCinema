@@ -37,7 +37,7 @@
                     </div>
                 </div>
             <br/>
-            <div th:if="${not #lists.isEmpty(screenings)}">
+            <div th:if="${#lists.isEmpty(screenings)}">
                 <div class="card mb-3">
                     <div class="card-header"><i class="fas fa-calendar-alt"></i>&nbsp;Repertuar na dzień: <span th:text="${timelineDate}"></span></div>
                     <div class="card-body">
@@ -55,23 +55,65 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td></td>
-                            <td><a th:href="@{/dashboard/screenings/add}">Dodaj film</a></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        </tbody>
+                        <div th:if="${not (#httpServletRequest.getParameter('action')=='add' or #httpServletRequest.getParameter('action')=='load')}">
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <form th:action="@{/dashboard/screenings(action=add)}" method="post">
+                                        <input type="hidden" name="timelineDate" th:value="${timelineDate}"/>
+                                        <button type="submit" class="btn btn-primary btn-block">Dodaj seans</button>
+                                    </form>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </div>
+                                        <div th:if="${#httpServletRequest.getParameter('action')=='add'}">
+                                        <tr><form th:action="@{/dashboard/screenings(action=load)}" method="post">
+                                                <input type="hidden" name="timelineDate" th:value="${timelineDate}"/>
+                                                <td></td>
+                                                <td><select name="titleLoad" class="form-control">
+                                                    <option th:each="title : ${movieTitles}" th:value="${title}" th:text="${title}"></option>
+                                                </select></td>
+                                                <td></td>
+                                                <td><select name="roomLoad" class="form-control">
+                                                    <option th:each="room : ${cinemaRooms}" th:value="${room.id}" th:text="${'Sala: ' + room.getName() + ' Miejsca: ' + room.seats.size()}"></option>
+                                                    </select></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><button type="submit" class="btn btn-primary btn-block">Wczytaj</button></td>
+                                            </form>
+                                        </tr>
+                                        </div>
+                                                                <div th:if="${#httpServletRequest.getParameter('action')=='load'}">
+                                                                    <tr>
+                                                                        <form th:action="@{/dashborad/screenings(action=save)}" th:object="${newScreening}" method="post">
+                                                                            <input type="hidden" name="timelineDate" th:value="${timelineDate}"/>
+                                                                            <input type="hidden" th:field="*{date}" th:value="${timelineDate}"/>
+                                                                        <td><input type="time" class="form-control" name="time" th:field="*{time}" required="true"/></td>
+                                                                            <input type="hidden" th:field="*{movie}" th:value="${movieFromDB}"/>
+                                                                        <td><span th:text="${movieFromDB.getTitle()}"></span></td>
+                                                                            <input type="hidden" th:field="*{duration}" th:value="${movieFromDB.getDuration()}"/>
+                                                                        <td><span th:text="${movieFromDB.getDuration()}"></span></td>
+                                                                            <input type="hidden" th:field="*{cinemaRoom}" th:value="${selectedRoom}"/>
+                                                                        <td><span th:text="${selectedRoom.getName()}"></span></td>
+                                                                        <td><span th:text="${selectedRoom.seats.size()}"></span></td>
+                                                                            <input type="hidden" th:field="*{freeSeats}" th:value="${selectedRoom.getSeats()}"/>
+                                                                        <td><span th:text="${selectedRoom.seats.size()}"></span></td>
+                                                                        <td><button type="submit" class="btn btn-primary btn-block">Zapisz</button></td>
+                                                                        </form>
+                                                                    </tr>
+                                                                </div>
+                                                </tbody>
                     </table>
                         </div>
                     </div>
                 </div>
             </div>
-                <div th:if="${#lists.isEmpty(screenings)}">
+                <div th:if="${not (#lists.isEmpty(screenings))}">
                     <div class="card mb-3">
                     <div class="card-header"><i class="fas fa-calendar-alt"></i>
                         Repertuar na dzień: <span th:text="${timelineDate}"></span></div>
@@ -103,25 +145,25 @@
                             </tr>
                             </tfoot>
                             <tbody>
-                            <tr th:each="screening : ${screenings}">
-                                <td th:text="${screening.time}"/>
-                                <td th:text="${screening.movie.getTitle()}"/>
-                                <td th:text="${screening.movie.getDuration()}"/>
-                                <td th:text="${screening.movie.getAgeCategory()}"/>
-                                <td th:text="${screening.cinemaRoom.getName()}"/>
-                                <td th:text="${screening.cinemaRoom.getSeats().size()}"/>
-                                <td th:text="${screening.getFreeSeats().size()}"/>
-                                <td><a id="delete-screening" style="text-decoration: none black" th:href="${'/dashboard/screenings/delete'+screening.sid}">Usuń</a></td>
-                            </tr>
                             <tr>
                                 <td></td>
-                                <td><a th:href="@{/dashboard/screenings/add}">Dodaj film</a></td>
+                                <td><a th:href="@{/dashboard/screenings(action=add)}">Dodaj film</a></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                            </tr>
+                            <tr th:each="screening : ${screenings}">
+                                <td th:text="*{screening.time}"/>
+                                <td th:text="*{screening.movie.getTitle()}"/>
+                                <td th:text="*{screening.duration}"/>
+                                <td th:text="*{screening.movie.getAgeCategory()}"/>
+                                <td th:text="*{screening.cinemaRoom.getName()}"/>
+                                <td th:text="*{screening.cinemaRoom.getSeats().size()}"/>
+                                <td th:text="*{screening.getFreeSeats().size()}"/>
+                                <td><a id="delete-screening" style="text-decoration: none black" th:href="${'/dashboard/screenings/delete'+screening.sid}">Usuń</a></td>
                             </tr>
                             </tbody>
                         </table>
