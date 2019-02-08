@@ -44,6 +44,10 @@ public class User {
         this.active = active;
     }
 
+    public User(@Length(min = 10) @NotEmpty(message = "{user.password.notempty}") String password) {
+        this.password = password;
+    }
+
     public long getId() {
         return id;
     }

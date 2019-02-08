@@ -16,8 +16,7 @@ public class PasswordService {
         return new Random().nextInt(to - from + 1) + from;
     }
 
-
-    public static String gPasswd(int lenght){
+    public static String gPasswd(int length){
         String result = "";
         String allStrings = SMALL_LETTERS + BIG_LETTERS + SPECIAL_SIGNS + NUMBERS;
         for(int i = 0; i < length; i++){

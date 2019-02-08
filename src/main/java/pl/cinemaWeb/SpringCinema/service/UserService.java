@@ -33,4 +33,13 @@ public class UserService {
         User userByEmail = userRepository.getUserByEmail(email);
         return userByEmail;
     }
+
+    public void saveUserByTemporaryPassword(User user, String temporaryPassword){
+
+        PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(bCryptPasswordEncoder.encode(temporaryPassword));
+
+        userRepository.save(user);
+
+    }
 }
