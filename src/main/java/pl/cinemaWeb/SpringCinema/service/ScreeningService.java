@@ -33,4 +33,8 @@ public class ScreeningService {
     public Date today(){
         return screeningRepository.currentDate();
     }
+
+    public void save(Screenings screening){
+        screeningRepository.save(screening);
+    }
 }
