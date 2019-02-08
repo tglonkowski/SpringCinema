@@ -12,6 +12,7 @@ import pl.cinemaWeb.SpringCinema.service.MovieService;
 import pl.cinemaWeb.SpringCinema.service.ScreeningService;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 @Controller
@@ -62,23 +63,26 @@ public class ScreeningsController{
     public String loadMovie(@RequestParam("timelineDate") Date timelineDate, @RequestParam("titleLoad") String movieTitle, @RequestParam("roomLoad") long roomID, Model model){
         Movie movieByTitle = movieService.movieByTitle(movieTitle);
         CinemaRoom cinemaRoom = cinemaRoomService.getRoomById(roomID);
-        model.addAttribute("movieFromDB", movieByTitle);
-        model.addAttribute("selectedRoom", cinemaRoom);
-        model.addAttribute("newScreening", new Screenings());
-        model.addAttribute("timelineDate", timelineDate);
+        Screenings screening = new Screenings();
+        screening.setMovie(movieByTitle);
+        screening.setDuration(movieByTitle.getDuration());
+        screening.setCinemaRoom(cinemaRoom);
+        screening.setDate(timelineDate);
+        screening.setFreeSeats(cinemaRoom.getSeats());
+        System.out.println(screening);
 
+        model.addAttribute("screening", screening);
+        model.addAttribute("timelineDate", timelineDate);
         return "dashboard/screenings/timeline";
     }
 
-    @PostMapping(value = "/screenings", params = "action=save")
-    public String saveScreening(@ModelAttribute Screenings newScreening, @RequestParam("timelineDate") Date timelineDate, Model model){
-        System.out.println("test1");
-        newScreening.setFreeSeats(newScreening.getCinemaRoom().getSeats());
-        System.out.println("save");
-        System.out.println(newScreening);
-        screeningService.save(newScreening);
+    @PostMapping("/screenings/save")
+    public String saveScreening(@ModelAttribute Screenings screening, @RequestParam("timelineDate") Date timelineDate, @RequestParam("time") Time time, Model model){
+        screening.setTime(time);
+        screeningService.save(screening);
+
         model.addAttribute("added", "Seans dodany.");
 
-        return "dashboard/screenings/timeline";
+        return "dashboard/screening/timeline";
     }
 }
