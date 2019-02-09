@@ -1,2 +1,0 @@
-# SpringCinema
-Projekt w budowie.
