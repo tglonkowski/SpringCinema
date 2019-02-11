@@ -1,7 +1,6 @@
 package pl.cinemaWeb.SpringCinema.model;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class Screenings {
 
     private int duration;
     private Date date;
-    private Time time;
+    private String time;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "room_id")
@@ -32,7 +31,7 @@ public class Screenings {
     public Screenings() {
     }
 
-    public Screenings(Movie movie, int duration, Date date, Time time, CinemaRoom cinemaRoom, List<Integer> freeSeats) {
+    public Screenings(Movie movie, int duration, Date date, String time, CinemaRoom cinemaRoom, List<Integer> freeSeats) {
         this.movie = movie;
         this.duration = duration;
         this.date = date;
@@ -73,11 +72,11 @@ public class Screenings {
         this.date = date;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

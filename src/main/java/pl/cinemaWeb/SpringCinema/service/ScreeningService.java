@@ -6,6 +6,7 @@ import pl.cinemaWeb.SpringCinema.model.Screenings;
 import pl.cinemaWeb.SpringCinema.repository.ScreeningRepository;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -36,5 +37,16 @@ public class ScreeningService {
 
     public void save(Screenings screening){
         screeningRepository.save(screening);
+    }
+
+    public Date CalendarAddTime(Date date, String timeString){
+        String timeTable[] = timeString.split(":");
+        Calendar calcTime =  Calendar.getInstance();
+        calcTime.setTime(date);
+        calcTime.set(Calendar.HOUR, Integer.parseInt(timeTable[0]));
+        calcTime.set(Calendar.MINUTE, Integer.parseInt(timeTable[1]));
+        calcTime.set(Calendar.SECOND, 0);
+        Date finalDate = new Date(calcTime.getTimeInMillis());
+        return finalDate;
     }
 }

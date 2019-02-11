@@ -20,13 +20,14 @@
             <hr>
             <div th:if="${deleted} != null" class="alert alert-info" role="alert" th:text="${deleted}"></div>
             <div th:if="${added} != null" class="alert alert-success" role="alert" th:text="${added}"></div>
+            <div th:if="${error} != null" class="alert alert-danger" role="alert" th:text="${error}"></div>
 
             <div class="row">
                 <div class="col-md-4">
                     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" th:action="@{/dashboard/screenings}" method="post">
                         <div class="input-group">
                             <label for="timelineDate">Wybierz dzień:&nbsp;</label>
-                            <input type="date" th:field="${timelineDate}" class="form-control" id="timelineDate" name="timelineDate" placeholder="Wybierz datę" aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="date" class="form-control" id="timelineDate" name="timelineDate" placeholder="Wybierz datę" aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
                                     <i class="fas fa-calendar-alt"></i>
@@ -37,25 +38,37 @@
                     </div>
                 </div>
             <br/>
-            <div th:if="${#lists.isEmpty(screenings)}">
                 <div class="card mb-3">
                     <div class="card-header"><i class="fas fa-calendar-alt"></i>&nbsp;Repertuar na dzień: <span th:text="${timelineDate}"></span></div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>Godzina</th>
-                            <th>Tytuł</th>
-                            <th>Długość</th>
-                            <th>Sala</th>
-                            <th>Ilość miejsc</th>
-                            <th>Zajęte miejsca</th>
-                            <th>Opcje</th>
-                        </tr>
-                        </thead>
+                                <thead>
+                                <tr>
+                                    <th>Godzina</th>
+                                    <th>Tytuł</th>
+                                    <th>Długość</th>
+                                    <th>Kategoria wiekowa</th>
+                                    <th>Sala</th>
+                                    <th>Ilość miejsc</th>
+                                    <th>Zajęte miejsca</th>
+                                    <th>Opcje</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Godzina</th>
+                                    <th>Tytuł</th>
+                                    <th>Długość</th>
+                                    <th>Kategoria wiekowa</th>
+                                    <th>Sala</th>
+                                    <th>Ilość miejsc</th>
+                                    <th>Wolne miejsca</th>
+                                    <th>Opcje</th>
+                                </tr>
+                                </tfoot>
                         <tbody>
-                        <div th:if="${not (#httpServletRequest.getParameter('action')=='add' or #httpServletRequest.getParameter('action')=='load')}">
+                        <div th:if="${not (#httpServletRequest.getParameter('action')=='add')}">
                             <tr>
                                 <td></td>
                                 <td>
@@ -64,7 +77,8 @@
                                         <button type="submit" class="btn btn-primary btn-block">Dodaj seans</button>
                                     </form>
                                 </td>
-                                <td><a th:href="@{/dashboard/screenings/save}">qewqweqweqweqw</a></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -72,10 +86,10 @@
                             </tr>
                         </div>
                                         <div th:if="${#httpServletRequest.getParameter('action')=='add'}">
-                                        <tr><form th:action="@{/dashboard/screenings(action=load)}" method="post">
+                                        <tr><form th:action="@{/dashboard/screenings(action=save)}" method="post">
                                                 <input type="hidden" name="timelineDate" th:value="${timelineDate}"/>
-                                                <td></td>
-                                                <td><select name="titleLoad" class="form-control">
+                                            <td><input type="time" class="form-control" name="timeString" required="true"/></td>
+                                            <td><select name="titleLoad" class="form-control">
                                                     <option th:each="title : ${movieTitles}" th:value="${title}" th:text="${title}"></option>
                                                 </select></td>
                                                 <td></td>
@@ -84,87 +98,28 @@
                                                     </select></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td><button type="submit" class="btn btn-primary btn-block">Wczytaj</button></td>
+                                                <td></td>
+                                                <td><button type="submit" class="btn btn-primary btn-block">Zapisz</button></td>
                                             </form>
                                         </tr>
                                         </div>
-                                                                <div th:if="${#httpServletRequest.getParameter('action')=='load'}">
-                                                                    <tr>
-                                                                        <form th:action="@{/dashborad/screenings/save}" th:object="${screening}" method="post">
-                                                                            <input type="hidden" name="timelineDate" th:value="${timelineDate}"/>
-                                                                            <td><input type="time" class="form-control" name="time" th:field="*{time}" required="true"/></td>
-                                                                            <td><span th:text="*{movie.getTitle()}"></span></td>
-                                                                            <td><span th:text="*{duration}"></span></td>
-                                                                            <td><span th:text="*{cinemaRoom.getName()}"></span></td>
-                                                                            <td><span th:text="*{cinemaRoom.seats.size()}"></span></td>
-                                                                            <td><span th:text="*{freeSeats.size()}"></span></td>
-                                                                            <td><button type="submit" class="btn btn-primary btn-block">Zapisz</button></td>
-                                                                        </form>
-                                                                    </tr>
-                                                                </div>
-                                                </tbody>
-                    </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
                 <div th:if="${not (#lists.isEmpty(screenings))}">
-                    <div class="card mb-3">
-                    <div class="card-header"><i class="fas fa-calendar-alt"></i>
-                        Repertuar na dzień: <span th:text="${timelineDate}"></span></div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th>Godzina</th>
-                                <th>Tytuł</th>
-                                <th>Długość</th>
-                                <th>Kategoria wiekowa</th>
-                                <th>Sala</th>
-                                <th>Ilość miejsc</th>
-                                <th>Zajęte miejsca</th>
-                                <th>Opcje</th>
+                            <tr th:each="screening : ${screenings}">
+                                <td th:text="*{screening.time}"/>
+                                <td th:text="*{screening.movie.getTitle()}"/>
+                                <td th:text="*{screening.duration}"/>
+                                <td th:text="*{screening.movie.getAgeCategory()}"/>
+                                <td th:text="*{screening.cinemaRoom.getName()}"/>
+                                <td th:text="*{screening.cinemaRoom.getSeats().size()}"/>
+                                <td th:text="*{screening.getFreeSeats().size()}"/>
+                                <td><a id="delete-screening" style="text-decoration: none black" th:href="${'/dashboard/screenings/delete'+screening.sid}">Usuń</a></td>
                             </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Godzina</th>
-                                <th>Tytuł</th>
-                                <th>Długość</th>
-                                <th>Kategoria wiekowa</th>
-                                <th>Sala</th>
-                                <th>Ilość miejsc</th>
-                                <th>Wolne miejsca</th>
-                                <th>Opcje</th>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                            <tr>
-                                <td></td>
-                                <td><a th:href="@{/dashboard/screenings(action=add)}">Dodaj film</a></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <!--<tr th:each="screening : ${screenings}">-->
-                                <!--<td th:text="*{screening.time}"/>-->
-                                <!--<td th:text="*{screening.movie.getTitle()}"/>-->
-                                <!--<td th:text="*{screening.duration}"/>-->
-                                <!--<td th:text="*{screening.movie.getAgeCategory()}"/>-->
-                                <!--<td th:text="*{screening.cinemaRoom.getName()}"/>-->
-                                <!--<td th:text="*{screening.cinemaRoom.getSeats().size()}"/>-->
-                                <!--<td th:text="*{screening.getFreeSeats().size()}"/>-->
-                                <!--<td><a id="delete-screening" style="text-decoration: none black" th:href="${'/dashboard/screenings/delete'+screening.sid}">Usuń</a></td>-->
-                            <!--</tr>-->
+                </div>
                             </tbody>
                         </table>
                     </div>
                     </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                    <div class="card-footer small text-muted">Repertuar na dzień: <span th:text="${timelineDate}"></span></div>
                 </div>
             </div>
         </div>
