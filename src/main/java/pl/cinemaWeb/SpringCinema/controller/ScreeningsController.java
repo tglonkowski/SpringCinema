@@ -13,7 +13,10 @@ import pl.cinemaWeb.SpringCinema.service.ScreeningService;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -52,6 +55,9 @@ public class ScreeningsController{
         List<Screenings> screenings = screeningService.screeningsByDate(timelineDate);
         List<String> movieTitles = movieService.getAllTitles();
         List<CinemaRoom> cinemaRooms = cinemaRoomService.getAllRooms();
+        System.out.println(movieTitles);
+        System.out.println(cinemaRooms);
+        System.out.println(screenings);
         model.addAttribute("screenings", screenings);
         model.addAttribute("movieTitles", movieTitles);
         model.addAttribute("cinemaRooms", cinemaRooms);
@@ -59,30 +65,27 @@ public class ScreeningsController{
         return "dashboard/screenings/timeline";
     }
 
-    @PostMapping(value = "/screenings", params = "action=load")
-    public String loadMovie(@RequestParam("timelineDate") Date timelineDate, @RequestParam("titleLoad") String movieTitle, @RequestParam("roomLoad") long roomID, Model model){
-        Movie movieByTitle = movieService.movieByTitle(movieTitle);
-        CinemaRoom cinemaRoom = cinemaRoomService.getRoomById(roomID);
+    @PostMapping(value = "/screenings", params = "action=save")
+    public String saveScreening(@RequestParam("titleLoad") String movieTitle, @RequestParam("timelineDate") Date timelineDate, @RequestParam("roomLoad") long roomID, @RequestParam("timeString") String timeString, Model model) {
+        Date screeningDate = screeningService.CalendarAddTime(timelineDate, timeString);
         Screenings screening = new Screenings();
+        Movie movieByTitle = movieService.movieByTitle(movieTitle);
+
+        CinemaRoom cinemaRoom = cinemaRoomService.getRoomById(roomID);
+        List<Integer> freeSeats = new ArrayList<>(cinemaRoom.getSeats());
+
+        screening.setDate(screeningDate);
+        screening.setTime(timeString);
         screening.setMovie(movieByTitle);
         screening.setDuration(movieByTitle.getDuration());
         screening.setCinemaRoom(cinemaRoom);
         screening.setDate(timelineDate);
-        screening.setFreeSeats(cinemaRoom.getSeats());
+        screening.setFreeSeats(freeSeats);
         System.out.println(screening);
-
-        model.addAttribute("screening", screening);
-        model.addAttribute("timelineDate", timelineDate);
-        return "dashboard/screenings/timeline";
-    }
-
-    @PostMapping("/screenings/save")
-    public String saveScreening(@ModelAttribute Screenings screening, @RequestParam("timelineDate") Date timelineDate, @RequestParam("time") Time time, Model model){
-        screening.setTime(time);
         screeningService.save(screening);
-
+        System.out.println("ZAPISANY");
         model.addAttribute("added", "Seans dodany.");
 
-        return "dashboard/screening/timeline";
+        return showByDay(timelineDate, model);
     }
 }
