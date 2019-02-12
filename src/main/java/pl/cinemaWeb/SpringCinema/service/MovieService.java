@@ -56,6 +56,16 @@ public class MovieService {
         return editMovie;
     }
 
+    public Movie movieByTitle(String title){
+        Movie movie = movieRepository.getMovieByTitle(title);
+        return movie;
+    }
+
+    public List<String> getAllTitles(){
+        List<String> allTitles = movieRepository.getAllTitles();
+        return allTitles;
+    }
+
     public List<ListMovie> findMovie(String title, String director, String ageCategory){
 
         List<ListMovie> movieFind = listMovieRepository.getMoviesByTitleContainingOrDirectorContainingOrAgeCategoryContaining(title, director, ageCategory);

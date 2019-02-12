@@ -43,7 +43,10 @@
                                 </div>
                                 <div th:if="${not (#httpServletRequest.getParameter('action')=='add')}">
                                     <tr>
+                                        <td></td>
                                         <td><a th:href="@{/dashboard/cinemaroom(action=add)}">Dodaj salę</a></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 </div>
                             </tbody>
