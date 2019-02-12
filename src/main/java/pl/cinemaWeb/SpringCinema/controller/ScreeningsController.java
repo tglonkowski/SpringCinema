@@ -12,10 +12,6 @@ import pl.cinemaWeb.SpringCinema.service.MovieService;
 import pl.cinemaWeb.SpringCinema.service.ScreeningService;
 
 import java.sql.Date;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -81,11 +77,21 @@ public class ScreeningsController{
         screening.setCinemaRoom(cinemaRoom);
         screening.setDate(timelineDate);
         screening.setFreeSeats(freeSeats);
-        System.out.println(screening);
         screeningService.save(screening);
-        System.out.println("ZAPISANY");
         model.addAttribute("added", "Seans dodany.");
 
+        return showByDay(timelineDate, model);
+    }
+
+    @PostMapping(value = "/screenings", params = "action=delete")
+    public String deleteScreening(@RequestParam("deleteID") long deleteID, @RequestParam("timelineDate") Date timelineDate, Model model){
+        Screenings deleteScreening = screeningService.getByID(deleteID);
+        if (deleteScreening.getFreeSeats().size() == deleteScreening.getCinemaRoom().getSeats().size()){
+            screeningService.deleteScreeningByID(deleteID);
+            model.addAttribute("deleted", "Seans usunięty.");
+        } else {
+            model.addAttribute("error", "Nie można usunąć seansu na który zostały sprzedane bilety!");
+        }
         return showByDay(timelineDate, model);
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.cinemaWeb.SpringCinema.model.CinemaRoom;
 import pl.cinemaWeb.SpringCinema.service.CinemaRoomService;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Controller
@@ -30,7 +29,6 @@ public class CinemaRoomController {
 
     @GetMapping(value = "/cinemaroom", params = "action=add")
     public String addRoom(Model model){
-        int newSeatsCount;
         model.addAttribute("newRoom", new CinemaRoom());
         List<CinemaRoom> roomList = cinemaRoomService.getAllRooms();
         model.addAttribute("allRooms", roomList);
