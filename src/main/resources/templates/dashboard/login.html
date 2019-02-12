@@ -21,13 +21,13 @@
   <link th:href="@{/dashboard/css/sb-admin.css}" rel="stylesheet">
 
 </head>
-<div th:if="${reminder} != null" class="alert alert-info" role="alert" th:text="${reset}"></div>
   <body class="masthead">
     <div class="container" id="vh">
       <div class="card-transparent card-login mx-auto force-middle">
         <div class="card-header font-weight-bold font-black-transparent">SpringCinema - Panel Logowania</div>
         <div class="card-body">
             <form name="login" th:action="@{/login}" method="post">
+              <div th:if="${reminder}" class="alert alert-info" role="alert" th:text="${reminder}"></div>
               <div th:if="${param.error}">
                 <div class="alert alert-danger">
                   Niepoprawny e-mail lub hasło!
