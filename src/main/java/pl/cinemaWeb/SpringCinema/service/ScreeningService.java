@@ -27,6 +27,11 @@ public class ScreeningService {
         return screeningsByDate;
     }
 
+    public Screenings getByID(long id){
+        Screenings byID = screeningRepository.getOne(id);
+        return byID;
+    }
+
     public List<Screenings> todayScreenings(){
         return screeningRepository.getTodayScreenings();
     }
@@ -48,5 +53,9 @@ public class ScreeningService {
         calcTime.set(Calendar.SECOND, 0);
         Date finalDate = new Date(calcTime.getTimeInMillis());
         return finalDate;
+    }
+
+    public void deleteScreeningByID(long id){
+        screeningRepository.deleteById(id);
     }
 }

@@ -54,8 +54,11 @@
                 </div>
             </div>
                 <div th:if="${#lists.size(allRooms)>0}">
-                    <div class="table-responsive">
-                            <table class="table table-bordered" width="100%" cellspacing="0">
+                    <div class="card mb-3">
+                        <div class="card-header"><i class="fas fa-couch"></i>Sale kinowe</span></div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
                                     <th class="col-1">ID</th>
@@ -90,12 +93,19 @@
                                     </div>
                                     <div th:if="${not (#httpServletRequest.getParameter('action')=='add')}">
                                         <tr>
+                                            <td></td>
                                             <td><a th:href="@{/dashboard/cinemaroom(action=add)}">Dodaj salę</a></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                     </div>
 
                                     </tbody>
                             </table>
+                            </div>
+                        </div>
+                        <div class="card-footer small text-muted">Sale kinowe</div>
+                    </div>
                 </div>
             </div>
         </div>

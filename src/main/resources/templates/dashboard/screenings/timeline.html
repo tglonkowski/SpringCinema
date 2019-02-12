@@ -18,16 +18,16 @@
                 <li class="breadcrumb-item active">Repertuar</li>
             </ol>
             <hr>
-            <div th:if="${deleted} != null" class="alert alert-info" role="alert" th:text="${deleted}"></div>
-            <div th:if="${added} != null" class="alert alert-success" role="alert" th:text="${added}"></div>
-            <div th:if="${error} != null" class="alert alert-danger" role="alert" th:text="${error}"></div>
+            <div th:if="${deleted}" class="alert alert-info" role="alert" th:text="${deleted}"></div>
+            <div th:if="${added}" class="alert alert-success" role="alert" th:text="${added}"></div>
+            <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
 
             <div class="row">
                 <div class="col-md-4">
                     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" th:action="@{/dashboard/screenings}" method="post">
                         <div class="input-group">
                             <label for="timelineDate">Wybierz dzień:&nbsp;</label>
-                            <input type="date" class="form-control" id="timelineDate" name="timelineDate" placeholder="Wybierz datę" aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="date" class="form-control" id="timelineDate" name="timelineDate" value="" aria-label="Search" aria-describedby="basic-addon2" required="true">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
                                     <i class="fas fa-calendar-alt"></i>
@@ -112,7 +112,37 @@
                                 <td th:text="*{screening.cinemaRoom.getName()}"/>
                                 <td th:text="*{screening.cinemaRoom.getSeats().size()}"/>
                                 <td th:text="*{screening.getFreeSeats().size()}"/>
-                                <td><a id="delete-screening" style="text-decoration: none black" th:href="${'/dashboard/screenings/delete'+screening.sid}">Usuń</a></td>
+                                <td><button type="button" class="btn-red btn-primary-red btn-block" data-toggle="modal" data-target="#deleteScreening">
+                                    Usuń
+                                </button></td>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="deleteScreening" tabindex="-1" role="dialog" aria-labelledby="deleteScreeningTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteScreeningTitle">Potwierdzenie usunięcia</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Czy na pewno chcesz usunąć seans?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                                <div class="col-4">
+                                                    <form th:action="@{/dashboard/screenings(action=delete)}" method="post">
+                                                        <input type="hidden" name="timelineDate" th:value="${timelineDate}"/>
+                                                        <input type="hidden" name="deleteID" th:value="*{screening.getSid()}">
+                                                        <button type="submit" class="btn-red btn-primary-red btn-block">Usuń</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </tr>
                 </div>
                             </tbody>
@@ -124,7 +154,6 @@
             </div>
         </div>
         <!-- /.container-fluid -->
-    </div>
     </div>
 <div th:replace="backFragments/footer :: footer"></div>
 </body>
