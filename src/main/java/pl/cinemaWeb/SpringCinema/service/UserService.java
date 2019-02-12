@@ -20,7 +20,7 @@ public class UserService {
 
     public void saveUser(User user){
         user.setActive(Boolean.TRUE);
-        user.setRole(RoleEnum.Client);
+        user.setRole(RoleEnum.Administrator);
 
         PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -35,6 +35,7 @@ public class UserService {
     }
 
     public void saveUserByTemporaryPassword(User user, String temporaryPassword){
+        System.out.println("Zapisywanie tymczasowego hasła do bazy!");
 
         PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         user.setPassword(bCryptPasswordEncoder.encode(temporaryPassword));
